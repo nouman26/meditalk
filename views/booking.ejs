@@ -1,0 +1,604 @@
+<!DOCTYPE html> 
+<html lang="en">
+	
+<!-- doccure/booking.html  30 Nov 2019 04:12:16 GMT -->
+<head>
+		<meta charset="utf-8">
+		<title>MediTalk</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+		
+		<!-- Favicons -->
+		<link href="/assets/img/favicon.png" rel="icon">
+		
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+		
+		<!-- Fontawesome CSS -->
+		<link rel="stylesheet" href="/assets/plugins/fontawesome/css/fontawesome.min.css">
+		<link rel="stylesheet" href="/assets/plugins/fontawesome/css/all.min.css">
+		
+		<!-- Main CSS -->
+		<link rel="stylesheet" href="/assets/css/style.css">
+		
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!--[if lt IE 9]>
+			<script src="/assets/js/html5shiv.min.js"></script>
+			<script src="/assets/js/respond.min.js"></script>
+		<![endif]-->
+	
+	</head>
+	<body>
+
+		<!-- Main Wrapper -->
+		<div class="main-wrapper">
+		
+			<!-- Header -->
+			<header class="header">
+				<nav class="navbar navbar-expand-lg header-nav">
+					<div class="navbar-header">
+						<a id="mobile_btn" href="javascript:void(0);">
+							<span class="bar-icon">
+								<span></span>
+								<span></span>
+								<span></span>
+							</span>
+						</a>
+						<a href="/" class="navbar-brand logo">
+							<img src="/assets/img/logo.png" class="img-fluid" alt="Logo">
+						</a>
+					</div>
+					<div class="main-menu-wrapper">
+						<div class="menu-header">
+							<a href="/" class="menu-logo">
+								<img src="/assets/img/logo.png" class="img-fluid" alt="Logo">
+							</a>
+							<a id="menu_close" class="menu-close" href="javascript:void(0);">
+								<i class="fas fa-times"></i>
+							</a>
+						</div>
+						<ul class="main-nav">
+							<li>
+								<a href="/">Home</a>
+							</li>
+							<li>
+								<a href="/doctor">Doctors </a>
+							</li>
+							<li id="log">
+								<a href="/login">Login</a>
+							</li>
+						</ul>	 
+					</div>		 
+					<ul style="display: <%= logdis%>;" class="nav header-navbar-rht">
+						
+						<li class="nav-item">
+							<a class="nav-link header-login" href="/login">login / Signup </a>
+						</li>
+					</ul>
+					<ul style="display: <%= logpro%>;" class="nav header-navbar-rht">
+						
+						<!-- User Menu -->
+						<li class="nav-item dropdown has-arrow logged-item">
+							<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+								<span class="user-img">
+									<img class="rounded-circle" src="/user_images/<%= data.image%>" width="31" alt="Darren Elder">
+								</span>
+							</a>
+							<div class="dropdown-menu dropdown-menu-right">
+								<div class="user-header">
+									<div class="avatar avatar-sm">
+										<img src="/user_images/<%= data.image%>" alt="User Image" class="avatar-img rounded-circle">
+									</div>
+									<div class="user-text">
+										<h6><%= data.name%></h6>
+										<p class="text-muted mb-0"><%= occupation%></p>
+									</div>
+								</div>
+								<a class="dropdown-item" href="/Profile/<%= data.name%>">Profile</a>
+								<a class="dropdown-item" href="/logout">Logout</a>
+							</div>
+						</li>
+						<!-- /User Menu -->
+						
+					</ul>
+				</nav>
+			</header>
+			<!-- /Header -->
+			
+			<!-- Breadcrumb -->
+			<div class="breadcrumb-bar">
+				<div class="container-fluid">
+					<div class="row align-items-center">
+						<div class="col-md-12 col-12">
+							<nav aria-label="breadcrumb" class="page-breadcrumb">
+								<ol class="breadcrumb">
+									<li class="breadcrumb-item"><a href="/">Home</a></li>
+									<li class="breadcrumb-item active" aria-current="page">Booking</li>
+								</ol>
+							</nav>
+							<h2 class="breadcrumb-title">Doctor Shedule</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /Breadcrumb -->
+			
+			<!-- Page Content -->
+			<div class="content">
+				<div class="container">
+				
+					<div class="row">
+						<div class="col-12">
+						
+							<div class="card">
+								<div class="card-body">
+									<div class="booking-doc-info">
+										<a href="/doctor-profile" class="booking-doc-img">
+											<img src="/user_images/<%= datadr.image%>" alt="User Image">
+										</a>
+										<div class="booking-info">
+											<h4><a href="/doctor-profile"><%= datadr.name%></a></h4>
+											<p class="exp-year"><%= datadr.education%></p>
+											<p class="text-muted mb-0"><i class="fas fa-map-marker-alt"></i> <%= datadr.clinic_address%></p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-12">
+						 
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="card">
+											<div class="card-body">
+												<h4 class="card-title">Schedule Timings</h4>
+												<div class="profile-box">
+													<div class="row">
+													</div>     
+													<div class="row">
+														<div class="col-md-12">
+															<div class="card schedule-widget mb-0">
+															
+																<!-- Schedule Header -->
+																<div class="schedule-header">
+																
+																	<!-- Schedule Nav -->
+																	<div class="schedule-nav">
+																		<ul class="nav nav-tabs nav-justified">
+																			<li class="nav-item">
+																				<a class="nav-link" data-toggle="tab" href="#slot_sunday">Sunday</a>
+																			</li>
+																			<li class="nav-item">
+																				<a class="nav-link active" data-toggle="tab" href="#slot_monday">Monday</a>
+																			</li>
+																			<li class="nav-item">
+																				<a class="nav-link" data-toggle="tab" href="#slot_tuesday">Tuesday</a>
+																			</li>
+																			<li class="nav-item">
+																				<a class="nav-link" data-toggle="tab" href="#slot_wednesday">Wednesday</a>
+																			</li>
+																			<li class="nav-item">
+																				<a class="nav-link" data-toggle="tab" href="#slot_thursday">Thursday</a>
+																			</li>
+																			<li class="nav-item">
+																				<a class="nav-link" data-toggle="tab" href="#slot_friday">Friday</a>
+																			</li>
+																			<li class="nav-item">
+																				<a class="nav-link" data-toggle="tab" href="#slot_saturday">Saturday</a>
+																			</li>
+																		</ul>
+																	</div>
+																	<!-- /Schedule Nav -->
+																	
+																</div>
+																<!-- /Schedule Header -->
+																
+																<!-- Schedule Content -->
+																<div class="tab-content schedule-cont">
+																
+																	<!-- Sunday Slot -->
+																	<div id="slot_sunday" class="tab-pane fade">
+																		<h4 class="card-title d-flex justify-content-between">
+																			<span>Time Slots</span>
+																		</h4>
+																		<!-- Slot List -->
+																		<div class="doc-times">
+																			<%sun.forEach(function(su){ %>
+																			<div class="doc-slot-list">
+																				<%= su.t%>
+																			</div>
+																			<% })%>
+																		</div>
+																		<!-- /Slot List -->
+																	</div>
+																	<!-- /Sunday Slot -->
+	
+																	<!-- Monday Slot -->
+																	<div id="slot_monday" class="tab-pane fade show active">
+																		<h4 class="card-title d-flex justify-content-between">
+																			<span>Time Slots</span>
+																		</h4>
+																		
+																		<!-- Slot List -->
+																		<div class="doc-times">
+																			<%mon.forEach(function(m){ %>
+																			<div class="doc-slot-list">
+																				<%= m.t%>
+																			</div>
+																			<% })%>
+																		</div>
+																		<!-- /Slot List -->
+																		
+																	</div>
+																	<!-- /Monday Slot -->
+	
+																	<!-- Tuesday Slot -->
+																	<div id="slot_tuesday" class="tab-pane fade">
+																		<h4 class="card-title d-flex justify-content-between">
+																			<span>Time Slots</span>
+																		</h4>
+																		<!-- Slot List -->
+																		<div class="doc-times">
+																			<%tue.forEach(function(tu){ %>
+																			<div class="doc-slot-list">
+																				<%= tu.t%>
+																			</div>
+																			<% })%>
+																		</div>
+																		<!-- /Slot List -->
+																	</div>
+																	<!-- /Tuesday Slot -->
+	
+																	<!-- Wednesday Slot -->
+																	<div id="slot_wednesday" class="tab-pane fade">
+																		<h4 class="card-title d-flex justify-content-between">
+																			<span>Time Slots</span>
+																		</h4>
+																		<!-- Slot List -->
+																		<div class="doc-times">
+																			<%wed.forEach(function(we){ %>
+																			<div class="doc-slot-list">
+																				<%= we.t%>
+																			</div>
+																			<% })%>
+																		</div>
+																		<!-- /Slot List -->
+																	</div>
+																	<!-- /Wednesday Slot -->
+	
+																	<!-- Thursday Slot -->
+																	<div id="slot_thursday" class="tab-pane fade">
+																		<h4 class="card-title d-flex justify-content-between">
+																			<span>Time Slots</span>
+																		</h4>
+																		<!-- Slot List -->
+																		<div class="doc-times">
+																			<%thu.forEach(function(th){ %>
+																			<div class="doc-slot-list">
+																				<%= th.t%>
+																			</div>
+																			<% })%>
+																		</div>
+																		<!-- /Slot List -->
+																	</div>
+																	<!-- /Thursday Slot -->
+	
+																	<!-- Friday Slot -->
+																	<div id="slot_friday" class="tab-pane fade">
+																		<h4 class="card-title d-flex justify-content-between">
+																			<span>Time Slots</span>
+																		</h4>
+																		<!-- Slot List -->
+																		<div class="doc-times">
+																			<%fri.forEach(function(f){ %>
+																			<div class="doc-slot-list">
+																				<%= f.t%>
+																			</div>
+																			<% })%>
+																		</div>
+																		<!-- /Slot List -->
+																	</div>
+																	<!-- /Friday Slot -->
+	
+																	<!-- Saturday Slot -->
+																	<div id="slot_saturday" class="tab-pane fade">
+																		<h4 class="card-title d-flex justify-content-between">
+																			<span>Time Slots</span>
+																		</h4>
+																		<!-- Slot List -->
+																		<div class="doc-times">
+																			<%sat.forEach(function(sa){ %>
+																			<div class="doc-slot-list">
+																				<%= sa.t%>
+																			</div>
+																			<% })%>
+																		</div>
+																		<!-- /Slot List -->
+																	</div>
+																	<!-- /Saturday Slot -->
+	
+																</div>
+																<!-- /Schedule Content -->
+																
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+									
+							</div>
+							<h4 style="text-align: center;">Booked Time</h4>
+							<div class="card booking-schedule schedule-widget">
+							
+								<!-- Schedule Header -->
+								<div class="schedule-header">
+									
+									<div class="row">
+										<div class="col-md-12">
+										
+											<!-- Day Slot -->
+											<div class="day-slot">
+												<ul>
+													<li>
+														<span>Mon</span>
+														<span class="slot-date">11 Nov</span>
+													</li>
+													<li>
+														<span>Tue</span>
+														<span class="slot-date">12 Nov</span>
+													</li>
+													<li>
+														<span>Wed</span>
+														<span class="slot-date">13 Nov</span>
+													</li>
+													<li>
+														<span>Thu</span>
+														<span class="slot-date">14 Nov</span>
+													</li>
+													<li>
+														<span>Fri</span>
+														<span class="slot-date">15 Nov</span>
+													</li>
+													<li>
+														<span>Sat</span>
+														<span class="slot-date">16 Nov</span>
+													</li>
+													<li>
+														<span>Sun</span>
+														<span class="slot-date">17 Nov</span>
+													</li>
+												</ul>
+											</div>
+											<!-- /Day Slot -->
+											
+										</div>
+									</div>
+								</div>
+								<!-- /Schedule Header -->
+								
+								<!-- Schedule Content -->
+								<div class="schedule-cont">
+									<div class="row">
+										<div class="col-md-12">
+										
+											<!-- Time Slot -->
+											<div class="time-slot">
+												<ul class="clearfix">
+													<li>
+														<%read1.forEach(function(row){ %>
+														<a class="timing selected">
+															<span><%= row.time%></span>
+														</a>
+														<% }) %>
+													</li>
+													<li>
+														<%read2.forEach(function(row){ %>
+														<a class="timing selected">
+															<span><%= row.time%></span>
+														</a>
+														<% }) %>
+													</li>
+													<li>
+														<%read3.forEach(function(row){ %>
+														<a class="timing selected">
+															<span><%= row.time%></span>
+														</a>
+														<% }) %>
+													</li>
+													<li>
+														<%read4.forEach(function(row){ %>
+														<a class="timing selected">
+															<span><%= row.time%></span>
+														</a>
+														<% }) %>
+													</li>
+													<li>
+														<%read5.forEach(function(row){ %>
+														<a class="timing selected">
+															<span><%= row.time%></span>
+														</a>
+														<% }) %>
+													</li>
+													<li>
+														<%read6.forEach(function(row){ %>
+														<a class="timing selected">
+															<span><%= row.time%></span>
+														</a>
+														<% }) %>
+													</li>
+													<li>
+														<%read7.forEach(function(row){ %>
+														<a class="timing selected">
+															<span><%= row.time%></span>
+														</a>
+														<% }) %>
+													</li>
+												</ul>
+											</div>
+											<!-- /Time Slot -->
+											
+										</div>
+									</div>
+								</div>
+								<!-- /Schedule Content -->
+								
+							</div>
+							<!-- Schedule Widget -->
+							
+							
+							<!-- /Schedule Widget -->
+							
+							<!-- /Schedule Widget -->
+							
+							<!-- Submit Section -->
+							<div class="submit-section proceed-btn text-right">
+								<a href="/checkout/<%= datadr.name%>" class="btn btn-primary submit-btn">Proceed to Pay</a>
+							</div>
+							<!-- /Submit Section -->
+							
+						</div>
+					</div>
+				</div>
+
+			</div>		
+			<!-- /Page Content -->
+   
+			<!-- Footer -->
+			<footer class="footer">
+				
+				<!-- Footer Top -->
+				<div class="footer-top">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-lg-6 col-md-6">
+							
+								<!-- Footer Widget -->
+								<div class="footer-widget footer-about">
+									<div class="footer-logo">
+										<img src="/assets/img/footer-logo.png" alt="logo">
+									</div>
+									<div class="footer-about-content">
+										<div class="social-icon">
+											<ul>
+												<li>
+													<a href="#" target="_blank"><i class="fab fa-facebook-f"></i> </a>
+												</li>
+												<li>
+													<a href="#" target="_blank"><i class="fab fa-twitter"></i> </a>
+												</li>
+												<li>
+													<a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+												</li>
+												<li>
+													<a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+												</li>
+												<li>
+													<a href="#" target="_blank"><i class="fab fa-dribbble"></i> </a>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+								<!-- /Footer Widget -->
+								
+							</div>
+							<div class="col-lg-6 col-md-6">
+							
+								<!-- Footer Widget -->
+								<div class="footer-widget footer-contact">
+									<h2 class="footer-title">Contact Us</h2>
+									<div class="footer-contact-info">
+										<div class="footer-address">
+											<span><i class="fas fa-map-marker-alt"></i></span>
+											<p> 3556  Beech Street, San Francisco,<br> California, CA 94108 </p>
+										</div>
+										<p>
+											<i class="fas fa-phone-alt"></i>
+											+1 315 369 5943
+										</p>
+										<p class="mb-0">
+											<i class="fas fa-envelope"></i>
+											doccure@example.com
+										</p>
+									</div>
+								</div>
+								<!-- /Footer Widget -->
+								
+							</div>
+							
+						</div>
+					</div>
+				</div>
+				<!-- /Footer Top -->
+				
+				<!-- Footer Bottom -->
+				<div class="footer-bottom">
+					<div class="container-fluid">
+					
+						<!-- Copyright -->
+						<div class="copyright">
+								<h5 style="text-align: center; color: white;" class="lin">© 2021|All Rights Reserved By MediTalk</h5>
+						</div>
+						<!-- /Copyright -->
+						
+					</div>
+				</div>
+				<!-- /Footer Bottom -->
+				
+			</footer>
+			<!-- /Footer -->
+		   
+		</div>
+		<!-- /Main Wrapper -->
+	  
+		<!-- jQuery -->
+		<script src="/assets/js/jquery.min.js"></script>
+		
+		<!-- Bootstrap Core JS -->
+		<script src="/assets/js/popper.min.js"></script>
+		<script src="/assets/js/bootstrap.min.js"></script>
+		
+		<!-- Custom JS -->
+		<script src="/assets/js/script.js"></script>
+		
+	</body>
+	<script>
+var day_parent=document.getElementsByClassName('day-slot')[0].getElementsByTagName("ul")[0];
+
+var day_name=day_parent.getElementsByTagName("li")[1].getElementsByTagName("span")[0].innerText;
+
+var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+var d = new Date();
+
+
+for(var i=0;i<7;i++){
+	var q=d.getDay()+i;
+	if(q>6)
+	{
+		day_parent.getElementsByTagName("li")[i].getElementsByTagName("span")[0].innerText=days[q-7].slice(0, 3);
+	}
+	else
+	{
+		day_parent.getElementsByTagName("li")[i].getElementsByTagName("span")[0].innerText=days[q].slice(0, 3);
+	}	
+}
+
+// Set change day name to today
+day_parent.getElementsByTagName("li")[0].getElementsByTagName("span")[0].innerText="Today";
+
+for(var i=0;i<7;i++){
+	var today = new Date();
+	var dd = String(today.getDate()+i).padStart(2, '0');
+	var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+	var yyyy = today.getFullYear();
+	
+	today = mm + '/' + dd + '/' + yyyy;
+	const date = new Date();
+	const month= date.toLocaleString('default', { month: 'long' });
+	document.getElementsByClassName('slot-date')[i].innerText= dd +" " +	month +" "+ yyyy;
+}
+	</script>
+
+<!-- doccure/booking.html  30 Nov 2019 04:12:16 GMT -->
+</html>

@@ -1,0 +1,284 @@
+<!DOCTYPE html> 
+<html lang="en">
+	
+<!-- doccure/video-call.html  30 Nov 2019 04:12:18 GMT -->
+<head>
+		<meta charset="utf-8">
+		<title>MediTalk</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+		
+		<!-- Favicons -->
+		<link href="/assets/img/favicon.png" rel="icon">
+		
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+		
+		<!-- Fontawesome CSS -->
+		<link rel="stylesheet" href="/assets/plugins/fontawesome/css/fontawesome.min.css">
+		<link rel="stylesheet" href="/assets/plugins/fontawesome/css/all.min.css">
+		
+		<!-- Main CSS -->
+		<link rel="stylesheet" href="/assets/css/style.css">
+		
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!--[if lt IE 9]>
+			<script src="assets/js/html5shiv.min.js"></script>
+			<script src="assets/js/respond.min.js"></script>
+		<![endif]-->
+	
+		<script type="text/javascript">
+			var roomID = "<%= RoomId %>"
+		  </script>
+		  <script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js" defer></script>
+    <script src="socket.io/socket.io.js" defer></script>
+    <script src="audio_index.js" charset="utf-8" defer></script>
+
+	<style>
+		.ti{
+			display: flex;
+			justify-content: center;
+			padding: 0px;
+		}
+		#videoDiv > :first-child {
+			text-align: center;
+			margin-top: 10%;
+			height: 8%;
+	}	
+	.end-call{
+		position: unset !important;
+		right: unset !important;
+		top: unset !important;
+		margin-top: 100px;
+		text-align: center !important;
+	}
+	</style>
+	</head>
+	<body class="call-page">
+
+		<!-- Main Wrapper -->
+		<div class="main-wrapper">
+		<!-- Page Content -->
+			<div class="content">
+				<div class="container-fluid">
+				
+					<!-- Call Wrapper -->
+					<div class="call-wrapper">
+						<div class="call-main-row">
+							<div class="call-main-wrapper">
+								<div class="call-view">
+									<div class="call-window">
+									
+										<!-- Call Header -->
+										<div class="fixed-header">
+											<div class="navbar">
+												<div class="user-details">
+													<div class="float-left user-img">
+														<a class="avatar avatar-sm mr-2" href="#" title="Charlene Reed">
+															<img src="/user_images/<%= image%>" alt="User Image" class="rounded-circle">
+															<span class="status online"></span>
+														</a>
+													</div>
+													<div class="user-info float-left">
+														<a href="#"><span><%= name%></span></a>
+													</div>
+												</div>
+											</div>
+										</div>
+										<!-- /Call Header -->
+										
+										<!-- Call Contents -->
+										<div class="call-contents">
+											<div class="call-content-wrap">
+												<div id="videoDiv">
+													<h3 id="hhh" style="text-align: center;">Connecting...</h3>
+													<div class="container con">
+														<ul style="display: none;" class="ti">
+															<h2 id="h">00</h2>
+															<h2> : </h2>
+															<h2 id="m">00</h2>
+															<h2> : </h2>
+															<h2 id="s">00</h2>
+														</ul>
+														<div class="end-call">
+															<a href="/appoint/<%= uname%>__<%= email%>__<%= occup%>">
+																<i class="material-icons">call_end</i>
+															</a>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<!-- Call Contents -->
+										
+										<!-- /Call Footer -->
+										
+									</div>
+								</div>
+								
+							</div>
+						</div>
+					</div>
+					<!-- /Call Wrapper -->
+					
+				</div>
+
+			</div>		
+			<!-- /Page Content -->
+   
+			<!-- Footer -->
+			<footer class="footer">
+				
+				<!-- Footer Top -->
+				<div class="footer-top">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-lg-6 col-md-6">
+							
+								<!-- Footer Widget -->
+								<div class="footer-widget footer-about">
+									<div class="footer-logo">
+										<img src="assets/img/footer-logo.png" alt="logo">
+									</div>
+									<div class="footer-about-content">
+										<div class="social-icon">
+											<ul>
+												<li>
+													<a href="#" target="_blank"><i class="fab fa-facebook-f"></i> </a>
+												</li>
+												<li>
+													<a href="#" target="_blank"><i class="fab fa-twitter"></i> </a>
+												</li>
+												<li>
+													<a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+												</li>
+												<li>
+													<a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+												</li>
+												<li>
+													<a href="#" target="_blank"><i class="fab fa-dribbble"></i> </a>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+								<!-- /Footer Widget -->
+								
+							</div>
+							<div class="col-lg-6 col-md-6">
+							
+								<!-- Footer Widget -->
+								<div class="footer-widget footer-contact">
+									<h2 class="footer-title">Contact Us</h2>
+									<div class="footer-contact-info">
+										<div class="footer-address">
+											<span><i class="fas fa-map-marker-alt"></i></span>
+											<p> 3556  Beech Street, San Francisco,<br> California, CA 94108 </p>
+										</div>
+										<p>
+											<i class="fas fa-phone-alt"></i>
+											+1 315 369 5943
+										</p>
+										<p class="mb-0">
+											<i class="fas fa-envelope"></i>
+											doccure@example.com
+										</p>
+									</div>
+								</div>
+								<!-- /Footer Widget -->
+								
+							</div>
+							
+						</div>
+					</div>
+				</div>
+				<!-- /Footer Top -->
+				
+				<!-- Footer Bottom -->
+				<div class="footer-bottom">
+					<div class="container-fluid">
+					
+						<!-- Copyright -->
+						<div class="copyright">
+								<h5 style="text-align: center; color: white;" class="lin">© 2021|All Rights Reserved By MediTalk</h5>
+						</div>
+						<!-- /Copyright -->
+						
+					</div>
+				</div>
+				<!-- /Footer Bottom -->
+				
+			</footer>
+			<!-- /Footer -->
+		   
+		</div>
+		<!-- /Main Wrapper -->
+	  
+		<!-- jQuery -->
+		<script src="assets/js/jquery.min.js"></script>
+		
+		<!-- Bootstrap Core JS -->
+		<script src="assets/js/popper.min.js"></script>
+		<script src="assets/js/bootstrap.min.js"></script>
+		
+		<!-- Custom JS -->
+		<script src="assets/js/script.js"></script>
+		<script>
+			var c;
+	var mse=0;
+	var se=0;
+	var mi=0;
+	var hr=0;
+	var clearinterval;
+	var sec = document.getElementById('s');
+	var min = document.getElementById('m');
+	var hour = document.getElementById('h');
+
+	function start(){
+		if(c==clearinterval){
+			clearinterval=setInterval(second,1);
+		}
+	}
+
+	function stop(){
+		clearInterval(clearinterval);
+		c=clearinterval;               //jb hum start button 2 times press kren aur stop button press hi na kren to start function one time run hona cheye q k jb hum start button ko 2 times press kren gy to stop aur clear work nhi kren gy q k k 1st  time clearinterval ki value 1 hojae gi 2nd time 2 hojae gi aur stop aur clear sirf 2nd timer ko stop kren gy 1st wale ko nhi
+	}
+
+	function clear(){
+		clearInterval(clearinterval);
+		c=clearinterval;
+		 mse=0;
+		 se=0;
+	 	 mi=0;
+	 	 hr=0;
+	 	 sec.innerText="00";
+	 	 min.innerText="00";
+	 	 hour.innerText="00";
+	}
+	function second(){
+		mse++;
+		if(mse==59)  // jb milisecond ki value 60 cross kre gi to second ki value main 1 add ho jae ga
+		{
+			se++;
+			sec.innerText=se;
+			mse=0;
+			if(se==59) // jb second ki value 60 cross kre gi to minute ki value main 1 add ho jae ga
+			{
+				mi++;
+				min.innerText=mi;
+				se=0;
+				if(mi==59)  // jb minute ki value 60 cross kre gi to hour ki value main 1 add ho jae ga
+				{
+					hr++;
+					hour.innerText=hr;
+					mi=0;
+				}
+			}
+			
+		}
+	}
+		</script>
+	</body>
+
+<!-- doccure/video-call.html  30 Nov 2019 04:12:18 GMT -->
+</html>

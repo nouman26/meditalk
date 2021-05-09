@@ -1,0 +1,282 @@
+<!DOCTYPE html> 
+<html lang="en">
+	
+<!-- doccure/  30 Nov 2019 04:11:34 GMT -->
+<head>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+        <title>MediTalk</title>
+		
+		<!-- Favicons -->
+		<link type="image/x-icon" href="/assets/img/favicon.png" rel="icon">
+		
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+		
+		<!-- Fontawesome CSS -->
+		<link rel="stylesheet" href="/assets/plugins/fontawesome/css/fontawesome.min.css">
+		<link rel="stylesheet" href="/assets/plugins/fontawesome/css/all.min.css">
+		
+		<!-- Main CSS -->
+		<link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/style_PaymentProg.css">
+		
+	
+	</head>
+<body>
+  <header class="header">
+    <nav class="navbar navbar-expand-lg header-nav">
+      <div class="navbar-header">
+        <a id="mobile_btn" href="javascript:void(0);">
+          <span class="bar-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+        </a>
+        <a href="/" class="navbar-brand logo">
+          <img src="/assets/img/logo.png" class="img-fluid" alt="Logo">
+        </a>
+      </div>
+      <div class="main-menu-wrapper">
+        <div class="menu-header">
+          <a href="/" class="menu-logo">
+            <img src="/assets/img/logo.png" class="img-fluid" alt="Logo">
+          </a>
+          <a id="menu_close" class="menu-close" href="javascript:void(0);">
+            <i class="fas fa-times"></i>
+          </a>
+        </div>
+        <ul class="main-nav">
+          <li>
+            <a href="/">Home</a>
+          </li>
+          <li>
+            <a href="/doctor">Doctors</a>
+          </li>
+          <li id="log">
+            <a href="/login">Login</a>
+          </li>
+        </ul>		 
+      </div>
+      <ul class="nav header-navbar-rht">
+        
+        <!-- User Menu -->
+        <li class="nav-item dropdown has-arrow logged-item">
+          <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+            <span class="user-img">
+              <img class="rounded-circle" src="/user_images/<%= data.image%>" width="31">
+            </span>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right">
+            <div class="user-header">
+              <div class="avatar avatar-sm">
+                <img src="/user_images/<%= data.image%>" alt="User Image" class="avatar-img rounded-circle">
+              </div>
+              <div class="user-text">
+                <h6><%= data.name%></h6>
+                <p class="text-muted mb-0"><%= occupation%></p>
+              </div>
+            </div>
+            <a class="dropdown-item" href="/Profile/<%= data.name%>">Profile</a>
+            <a class="dropdown-item" href="/logout">Logout</a>
+          </div>
+        </li>
+        <!-- /User Menu -->
+        
+      </ul>
+    </nav>
+  </header>
+   
+  <div class="container">
+    <!-- Verification Entry Jumbotron -->
+        <div class="jumbotron text-center">
+            <h3>You are Booking <%= datadr.name%></h3>
+            <h3>Please transfer <%= datadr.price%> to the given account number</h3>
+            <h3>After the transaction, please upload the image of the receipt/massage that you are received after the transaction</h3>
+            <table>
+                <thead>
+                    <th>Account Type</th>
+                    <th>Account Name</th>
+                    <th>Account Number</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><img class="account_type_logo" src="/assets/img/jazz-cash.svg"></td>
+                        <td><%= datadr.jc_ac_name%></td>
+                        <td><%= datadr.jc_ac_no%></td>
+                    </tr>
+                    <tr>
+                      <td><img class="account_type_logo" src="/assets/img/easypaisa.png"></td>
+                      <td><%= datadr.ep_ac_name%></td>
+                      <td><%= datadr.ep_ac_no%></td>
+                  </tr>
+                </tbody>
+            </table>
+        </div>
+
+    <div id="form_fade-box">
+          <form class="form" action="/thanks" method="post" enctype="multipart/form-data">
+            <div class="row ac_type">
+              <div class="col-sm-6">
+                <input type="radio" name="ac_type" value="Jazzcash" placeholder=""  required/>
+                <img class="form_ac_type_logo" style="width: 105px;" src="/assets/img/jazz-cash.svg">
+              </div>
+              <div class="col-sm-6">
+                <input type="radio" name="ac_type" value="Easypaisa" placeholder="" required/>
+                <img class="form_ac_type_logo" style="width: 210px;" src="/assets/img/easypaisa.png">
+              </div>
+            </div>
+            <div class="row">
+              <input type="hidden" name="doctor" value="<%= datadr.name%>"/>
+              <input type="hidden" name="name" value="<%= data.name%>"/>
+              <input type="hidden" name="email" value="<%= data.email%>"/>
+              <input type="hidden" name="image" value="<%= data.image%>"/>
+              <input type="hidden" name="date"  value="<%= date%>"/>
+              <input type="hidden" name="time"  value="<%= time%>"/>
+              <input type="hidden" name="drimage"  value="<%= datadr.image%>"/>
+              <div class="col-sm-4">
+                <label for="trx">Account Number</label>
+                <input class="input-styling input" type="text" name="account_no" placeholder=""  required/>
+              </div>
+              <div class="col-sm-4">
+                <label for="trx">TID Number</label>
+                <input class="input-styling input" type="text" name="trx" placeholder=""  required/>
+              </div>
+              <div class="col-sm-4">
+                <label for="receipt">Upload Receipt</label>
+                <input style="padding: 0px; border-radius: 0px; font-size: 13px;" class="input-styling" type="file" name="receipt" placeholder="" required/>
+              </div>
+            </div>
+            <button type="submit" class="submit">Next</button>
+          </form>
+    </div>  
+
+    <!-- Instructions -->
+      <div class="alert alert-success" role="alert" id="notes">
+        <h4>NOTES</h4>
+        <ul>
+          <li>If you not pay fees and provide wrong TID Number or Image Your appointment will be rejected and you willsee in your Reject apointment section.</li>
+          <li>If you provide correct Trx or Image Your appointment will be accepted and you will recieve video link in appointment section.</li>
+          <li>If somehow, you did not recieve mail then contact us.</li>
+          <li>If you have any problem regarding appointment then contact us.</li>
+        </ul>
+      </div>
+    </div>
+
+			<!-- Footer -->
+			<footer class="footer">
+				
+				<!-- Footer Top -->
+				<div class="footer-top">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-lg-6 col-md-6">
+							
+								<!-- Footer Widget -->
+								<div class="footer-widget footer-about">
+									<div class="footer-logo">
+										<img src="/assets/img/footer-logo.png" alt="logo">
+									</div>
+									<div class="footer-about-content">
+										<div class="social-icon">
+											<ul>
+												<li>
+													<a href="#" target="_blank"><i class="fab fa-facebook-f"></i> </a>
+												</li>
+												<li>
+													<a href="#" target="_blank"><i class="fab fa-twitter"></i> </a>
+												</li>
+												<li>
+													<a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+												</li>
+												<li>
+													<a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+												</li>
+												<li>
+													<a href="#" target="_blank"><i class="fab fa-dribbble"></i> </a>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+								<!-- /Footer Widget -->
+								
+							</div>
+							<div class="col-lg-6 col-md-6">
+							
+								<!-- Footer Widget -->
+								<div class="footer-widget footer-contact">
+									<h2 class="footer-title">Contact Us</h2>
+									<div class="footer-contact-info">
+										<div class="footer-address">
+											<span><i class="fas fa-map-marker-alt"></i></span>
+											<p> 3556  Beech Street, San Francisco,<br> California, CA 94108 </p>
+										</div>
+										<p>
+											<i class="fas fa-phone-alt"></i>
+											+1 315 369 5943
+										</p>
+										<p class="mb-0">
+											<i class="fas fa-envelope"></i>
+											doccure@example.com
+										</p>
+									</div>
+								</div>
+								<!-- /Footer Widget -->
+								
+							</div>
+							
+						</div>
+					</div>
+				</div>
+				<!-- /Footer Top -->
+				
+				<!-- Footer Bottom -->
+				<div class="footer-bottom">
+					<div class="container-fluid">
+					
+						<!-- Copyright -->
+						<div class="copyright">
+								<h5 style="text-align: center; color: white;" class="lin">© 2021|All Rights Reserved By MediTalk</h5>
+						</div>
+						<!-- /Copyright -->
+						
+					</div>
+				</div>
+				<!-- /Footer Bottom -->
+				
+			</footer>
+			<!-- /Footer -->
+		   
+	   </div>
+	   <!-- /Main Wrapper -->
+	  
+		<!-- jQuery -->
+		<script src="/assets/js/jquery.min.js"></script>
+		
+		<!-- Bootstrap Core JS -->
+		<script src="/assets/js/popper.min.js"></script>
+		<script src="/assets/js/bootstrap.min.js"></script>
+		
+		<!-- Slick JS -->
+		<script src="/assets/js/slick.js"></script>
+		
+		<!-- Custom JS -->
+		<script src="/assets/js/script.js"></script>
+</body>
+<script>
+  var curday = function(sp){
+  today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth()+1; //As January is 0.
+  var yyyy = today.getFullYear();
+
+  if(dd<10) dd='0'+dd;
+  if(mm<10) mm='0'+mm;
+  return (dd+sp+mm+sp+yyyy);
+  };
+  document.getElementById("date").value=curday('/')
+</script>
+</html>

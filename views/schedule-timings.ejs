@@ -1,0 +1,678 @@
+<!DOCTYPE html> 
+<html lang="en">
+	
+<!-- doccure/schedule-timings.html  30 Nov 2019 04:12:09 GMT -->
+<head>
+		<meta charset="utf-8">
+		<title>MediTalk</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+		
+		<!-- Favicons -->
+		<link href="/assets/img/favicon.png" rel="icon">
+		
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+		
+		<!-- Fontawesome CSS -->
+		<link rel="stylesheet" href="/assets/plugins/fontawesome/css/fontawesome.min.css">
+		<link rel="stylesheet" href="/assets/plugins/fontawesome/css/all.min.css">
+		
+		<!-- Select2 CSS -->
+		<link rel="stylesheet" href="/assets/plugins/select2/css/select2.min.css">
+		
+		<!-- Main CSS -->
+		<link rel="stylesheet" href="/assets/css/style.css">
+		
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!--[if lt IE 9]>
+			<script src="/assets/js/html5shiv.min.js"></script>
+			<script src="/assets/js/respond.min.js"></script>
+		<![endif]-->
+	
+	</head>
+	<body>
+
+		<!-- Main Wrapper -->
+		<div class="main-wrapper">
+		
+			<!-- Header -->
+			<header class="header">
+				<nav class="navbar navbar-expand-lg header-nav">
+					<div class="navbar-header">
+						<a id="mobile_btn" href="javascript:void(0);">
+							<span class="bar-icon">
+								<span></span>
+								<span></span>
+								<span></span>
+							</span>
+						</a>
+						<a href="/" class="navbar-brand logo">
+							<img src="/assets/img/logo.png" class="img-fluid" alt="Logo">
+						</a>
+					</div>
+					<div class="main-menu-wrapper">
+						<div class="menu-header">
+							<a href="/" class="menu-logo">
+								<img src="/assets/img/logo.png" class="img-fluid" alt="Logo">
+							</a>
+							<a id="menu_close" class="menu-close" href="javascript:void(0);">
+								<i class="fas fa-times"></i>
+							</a>
+						</div>
+						<ul class="main-nav">
+							<li>
+								<a href="/">Home</a>
+							</li>
+							<li>
+								<a href="/doctor">Doctors</a>
+							</li>
+							<li id="log">
+								<a href="/login">Login / Signup</a>
+							</li>
+						</ul>
+					</div>
+					<ul class="nav header-navbar-rht">
+						
+						<!-- User Menu -->
+						<li class="nav-item dropdown has-arrow logged-item">
+							<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+								<span class="user-img">
+									<img class="rounded-circle" src="/user_images/<%= data.image%>" width="31" alt="Darren Elder">
+								</span>
+							</a>
+							<div class="dropdown-menu dropdown-menu-right">
+								<div class="user-header">
+									<div class="avatar avatar-sm">
+										<img src="/user_images/<%= data.image%>" alt="User Image" class="avatar-img rounded-circle">
+									</div>
+									<div class="user-text">
+										<h6><%= data.name%></h6>
+										<p class="text-muted mb-0"><%= occupation%></p>
+									</div>
+								</div>
+								<a class="dropdown-item" href="/Profile/<%= data.name%>">Profile</a>
+								<a class="dropdown-item" href="/logout">Logout</a>
+							</div>
+						</li>
+						<!-- /User Menu -->
+						
+					</ul>
+				</nav>
+			</header>
+			<!-- /Header -->
+			
+			<!-- Breadcrumb -->
+			<div class="breadcrumb-bar">
+				<div class="container-fluid">
+					<div class="row align-items-center">
+						<div class="col-md-12 col-12">
+							<nav aria-label="breadcrumb" class="page-breadcrumb">
+								<ol class="breadcrumb">
+									<li class="breadcrumb-item"><a href="/">Home</a></li>
+									<li class="breadcrumb-item active" aria-current="page">Schedule Timings</li>
+								</ol>
+							</nav>
+							<h2 class="breadcrumb-title">Schedule Timings</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /Breadcrumb -->
+			
+			<!-- Page Content -->
+			<div class="content">
+				<div class="container-fluid">
+
+					<div class="row">
+						<div class="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
+						
+							<!-- Profile Sidebar -->
+							<div class="profile-sidebar">
+								<div class="widget-profile pro-widget-content">
+									<div class="profile-info-widget">
+										<a href="#" class="booking-doc-img">
+											<img src="/user_images/<%= data.image%>" alt="User Image">
+										</a>
+										<div class="profile-det-info">
+											<h3><%= data.name%></h3>
+											
+											<div class="patient-details">
+												<h5 class="mb-0"><%= data.specialist%></h5>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="dashboard-widget">
+									<nav class="dashboard-menu">
+										<ul>
+											<li>
+												<a href="/profile/<%= data.name%>">
+													<i class="fas fa-columns"></i>
+													<span>Dashboard</span>
+												</a>
+											</li>
+											<li>
+												<a href="/appointment/<%= data.name%>">
+													<i class="fas fa-calendar-check"></i>
+													<span>Appointments</span>
+												</a>
+											</li>
+											<li class="active">
+												<a href="/schedule-timings/<%= data.name%>">
+													<i class="fas fa-hourglass-start"></i>
+													<span>Schedule Timings</span>
+												</a>
+											</li>
+											<li>
+												<a href="/doctor-profile-setting/<%= data.name%>">
+													<i class="fas fa-user-cog"></i>
+													<span>Profile Settings</span>
+												</a>
+											</li>
+											<li>
+												<a href="/change-password/<%= data.name%>">
+													<i class="fas fa-lock"></i>
+													<span>Change Password</span>
+												</a>
+											</li>
+											<li>
+												<a href="/logout">
+													<i class="fas fa-sign-out-alt"></i>
+													<span>Logout</span>
+												</a>
+											</li>
+										</ul>
+									</nav>
+								</div>
+							</div>
+							<!-- /Profile Sidebar -->
+							
+						</div>
+						
+						<div class="col-md-7 col-lg-8 col-xl-9">
+						 
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="card">
+										<div class="card-body">
+											<h4 class="card-title">Schedule Timings</h4>
+											<div class="profile-box">   
+												<div class="row">
+													<div class="col-md-12">
+														<div class="card schedule-widget mb-0">
+														
+															<!-- Schedule Header -->
+															<div class="schedule-header">
+															
+																<!-- Schedule Nav -->
+																<div class="schedule-nav">
+																	<ul class="nav nav-tabs nav-justified">
+																		<li class="nav-item">
+																			<a class="nav-link" data-toggle="tab" href="#slot_sunday">Sunday</a>
+																		</li>
+																		<li class="nav-item">
+																			<a class="nav-link active" data-toggle="tab" href="#slot_monday">Monday</a>
+																		</li>
+																		<li class="nav-item">
+																			<a class="nav-link" data-toggle="tab" href="#slot_tuesday">Tuesday</a>
+																		</li>
+																		<li class="nav-item">
+																			<a class="nav-link" data-toggle="tab" href="#slot_wednesday">Wednesday</a>
+																		</li>
+																		<li class="nav-item">
+																			<a class="nav-link" data-toggle="tab" href="#slot_thursday">Thursday</a>
+																		</li>
+																		<li class="nav-item">
+																			<a class="nav-link" data-toggle="tab" href="#slot_friday">Friday</a>
+																		</li>
+																		<li class="nav-item">
+																			<a class="nav-link" data-toggle="tab" href="#slot_saturday">Saturday</a>
+																		</li>
+																	</ul>
+																</div>
+																<!-- /Schedule Nav -->
+																
+															</div>
+															<!-- /Schedule Header -->
+															
+															<!-- Schedule Content -->
+															<div class="tab-content schedule-cont">
+															
+																<!-- Sunday Slot -->
+																<div id="slot_sunday" class="tab-pane fade">
+																	<h4 class="card-title d-flex justify-content-between">
+																		<span>Time Slots</span> 
+																		<a class="edit-link" data-toggle="modal" href="#add_time_slot"><i class="fa fa-plus-circle"></i> Add Slot</a>
+																	</h4>
+																	<!-- Slot List -->
+																	<div class="doc-times">
+																		<%sun.forEach(function(su){ %>
+																		<div class="doc-slot-list">
+																			<%= su.t%>
+																			<a href="/schedule-timings/delete_schedule/<%= su.day%>_<%= su.t%>_<%= data.name%>" class="delete_schedule">
+																				<i class="fa fa-times"></i>
+																			</a>
+																		</div>
+																		<% })%>
+																	</div>
+																	<!-- /Slot List -->
+																</div>
+																<!-- /Sunday Slot -->
+
+																<!-- Monday Slot -->
+																<div id="slot_monday" class="tab-pane fade show active">
+																	<h4 class="card-title d-flex justify-content-between">
+																		<span>Time Slots</span> 
+																		<a class="edit-link" data-toggle="modal" href="#add_time_slot"><i class="fa fa-plus-circle"></i> Add Slot</a>
+																	</h4>
+																	<!-- Slot List -->
+																	<div class="doc-times">
+																		<%mon.forEach(function(m){ %>
+																		<div class="doc-slot-list">
+																			<%= m.t%>
+																			<a href="/schedule-timings/delete_schedule/<%= m.day%>_<%= m.t%>_<%= data.name%>" class="delete_schedule">
+																				<i class="fa fa-times"></i>
+																			</a>
+																		</div>
+																		<% })%>
+																	</div>
+																	<!-- /Slot List -->
+																	
+																</div>
+																<!-- /Monday Slot -->
+
+																<!-- Tuesday Slot -->
+																<div id="slot_tuesday" class="tab-pane fade">
+																	<h4 class="card-title d-flex justify-content-between">
+																		<span>Time Slots</span> 
+																		<a class="edit-link" data-toggle="modal" href="#add_time_slot"><i class="fa fa-plus-circle"></i> Add Slot</a>
+																	</h4>
+																	<!-- Slot List -->
+																	<div class="doc-times">
+																		<%tue.forEach(function(tu){ %>
+																		<div class="doc-slot-list">
+																			<%= tu.t%>
+																			<a href="/schedule-timings/delete_schedule/<%= tu.day%>_<%= tu.t%>_<%= data.name%>" class="delete_schedule">
+																				<i class="fa fa-times"></i>
+																			</a>
+																		</div>
+																		<% })%>
+																	</div>
+																	<!-- /Slot List -->
+																</div>
+																<!-- /Tuesday Slot -->
+
+																<!-- Wednesday Slot -->
+																<div id="slot_wednesday" class="tab-pane fade">
+																	<h4 class="card-title d-flex justify-content-between">
+																		<span>Time Slots</span> 
+																		<a class="edit-link" data-toggle="modal" href="#add_time_slot"><i class="fa fa-plus-circle"></i> Add Slot</a>
+																	</h4>
+																	<!-- Slot List -->
+																	<div class="doc-times">
+																		<%wed.forEach(function(w){ %>
+																		<div class="doc-slot-list">
+																			<%= w.t%>
+																			<a href="/schedule-timings/delete_schedule/<%= w.day%>_<%= w.t%>_<%= data.name%>" class="delete_schedule">
+																				<i class="fa fa-times"></i>
+																			</a>
+																		</div>
+																		<% })%>
+																	</div>
+																	<!-- /Slot List -->
+																</div>
+																<!-- /Wednesday Slot -->
+
+																<!-- Thursday Slot -->
+																<div id="slot_thursday" class="tab-pane fade">
+																	<h4 class="card-title d-flex justify-content-between">
+																		<span>Time Slots</span> 
+																		<a class="edit-link" data-toggle="modal" href="#add_time_slot"><i class="fa fa-plus-circle"></i> Add Slot</a>
+																	</h4>
+																	<!-- Slot List -->
+																	<div class="doc-times">
+																		<%thu.forEach(function(th){ %>
+																		<div class="doc-slot-list">
+																			<%= th.t%>
+																			<a href="/schedule-timings/delete_schedule/<%= th.day%>_<%= th.t%>_<%= data.name%>" class="delete_schedule">
+																				<i class="fa fa-times"></i>
+																			</a>
+																		</div>
+																		<% })%>
+																	</div>
+																	<!-- /Slot List -->
+																</div>
+																<!-- /Thursday Slot -->
+
+																<!-- Friday Slot -->
+																<div id="slot_friday" class="tab-pane fade">
+																	<h4 class="card-title d-flex justify-content-between">
+																		<span>Time Slots</span> 
+																		<a class="edit-link" data-toggle="modal" href="#add_time_slot"><i class="fa fa-plus-circle"></i> Add Slot</a>
+																	</h4>
+																	<!-- Slot List -->
+																	<div class="doc-times">
+																		<%fri.forEach(function(f){ %>
+																		<div class="doc-slot-list">
+																			<%= f.t%>
+																			<a href="/schedule-timings/delete_schedule/<%= f.day%>_<%= f.t%>_<%= data.name%>" class="delete_schedule">
+																				<i class="fa fa-times"></i>
+																			</a>
+																		</div>
+																		<% })%>
+																	</div>
+																	<!-- /Slot List -->
+																</div>
+																<!-- /Friday Slot -->
+
+																<!-- Saturday Slot -->
+																<div id="slot_saturday" class="tab-pane fade">
+																	<h4 class="card-title d-flex justify-content-between">
+																		<span>Time Slots</span> 
+																		<a class="edit-link" data-toggle="modal" href="#add_time_slot"><i class="fa fa-plus-circle"></i> Add Slot</a>
+																	</h4>
+																	<!-- Slot List -->
+																	<div class="doc-times">
+																		<%sat.forEach(function(sa){ %>
+																		<div class="doc-slot-list">
+																			<%= sa.t%>
+																			<a href="/schedule-timings/delete_schedule/<%= sa.day%>_<%= sa.t%>_<%= data.name%>" class="delete_schedule">
+																				<i class="fa fa-times"></i>
+																			</a>
+																		</div>
+																		<% })%>
+																	</div>
+																	<!-- /Slot List -->
+																</div>
+																<!-- /Saturday Slot -->
+
+															</div>
+															<!-- /Schedule Content -->
+															
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+								
+						</div>
+					</div>
+
+				</div>
+
+			</div>		
+			<!-- /Page Content -->
+   
+			<!-- Footer -->
+			<footer class="footer">
+				
+				<!-- Footer Top -->
+				<div class="footer-top">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-lg-6 col-md-6">
+							
+								<!-- Footer Widget -->
+								<div class="footer-widget footer-about">
+									<div class="footer-logo">
+										<img src="/assets/img/footer-logo.png" alt="logo">
+									</div>
+									<div class="footer-about-content">
+										<div class="social-icon">
+											<ul>
+												<li>
+													<a href="#" target="_blank"><i class="fab fa-facebook-f"></i> </a>
+												</li>
+												<li>
+													<a href="#" target="_blank"><i class="fab fa-twitter"></i> </a>
+												</li>
+												<li>
+													<a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+												</li>
+												<li>
+													<a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+												</li>
+												<li>
+													<a href="#" target="_blank"><i class="fab fa-dribbble"></i> </a>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+								<!-- /Footer Widget -->
+								
+							</div>
+							<div class="col-lg-6 col-md-6">
+							
+								<!-- Footer Widget -->
+								<div class="footer-widget footer-contact">
+									<h2 class="footer-title">Contact Us</h2>
+									<div class="footer-contact-info">
+										<div class="footer-address">
+											<span><i class="fas fa-map-marker-alt"></i></span>
+											<p> 3556  Beech Street, San Francisco,<br> California, CA 94108 </p>
+										</div>
+										<p>
+											<i class="fas fa-phone-alt"></i>
+											+1 315 369 5943
+										</p>
+										<p class="mb-0">
+											<i class="fas fa-envelope"></i>
+											doccure@example.com
+										</p>
+									</div>
+								</div>
+								<!-- /Footer Widget -->
+								
+							</div>
+							
+						</div>
+					</div>
+				</div>
+				<!-- /Footer Top -->
+				
+				<!-- Footer Bottom -->
+				<div class="footer-bottom">
+					<div class="container-fluid">
+					
+						<!-- Copyright -->
+						<div class="copyright">
+								<h5 style="text-align: center; color: white;" class="lin">© 2021|All Rights Reserved By MediTalk</h5>
+						</div>
+						<!-- /Copyright -->
+						
+					</div>
+				</div>
+				<!-- /Footer Bottom -->
+				
+			</footer>
+			<!-- /Footer -->
+		   
+		</div>
+		<!-- /Main Wrapper -->
+		
+		<!-- Add Time Slot Modal -->
+		<div class="modal fade custom-modal" id="add_time_slot">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Add Time Slots</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form action="/schedule-timings/add_schedule/<%= data.name%>" method="POST">
+							<div class="hours-info">
+								<h4 class="card-title d-flex justify-content-between">
+
+									<span> Select Day</span> </h4>
+									<div class="col-12 col-md-12">
+										<div style="margin-top: -25px;" class="form-group">
+											<label></label>
+											<select name="day" class="form-control" required>
+												<option>-</option>
+												<option>Monday</option>
+												<option>Tuesday</option>  
+												<option>Wednesday</option>
+												<option>Thursday</option>
+												<option>Friday</option>
+												<option>Saturday</option>
+												<option>Sunday</option>
+											</select>
+										</div> 
+									</div>
+								<div class="row form-row hours-cont">
+									<div class="col-12 col-md-10">
+										<h4 class="card-title d-flex justify-content-between">
+											<span>Start Time</span> </h4>
+										<div class="row form-row">
+											<div class="col-12 col-md-4">
+												<div class="form-group">
+													<label>Hours</label>
+													<select name="shour" class="form-control" required>
+														<option>-</option>
+														<option>01</option>
+														<option>02</option>  
+														<option>03</option>
+														<option>04</option>
+														<option>05</option>
+														<option>06</option>
+														<option>07</option>  
+														<option>08</option>
+														<option>09</option>
+														<option>10</option>
+														<option>11</option>
+														<option>12</option>
+														<option>close</option>
+													</select>
+												</div> 
+											</div>
+											<div class="col-12 col-md-4">
+												<div class="form-group">
+													<label>Minutes</label>
+													<select name="smin" class="form-control" required>
+														<option>-</option>
+														<option>00</option>
+														<option>05</option>
+														<option>10</option>  
+														<option>15</option>
+														<option>20</option>
+														<option>25</option>
+														<option>30</option>
+														<option>40</option>  
+														<option>45</option>
+														<option>50</option>
+														<option>55</option>
+														<option>60</option>
+														<option>close</option>
+													</select>
+												</div> 
+											</div>
+											<div class="col-12 col-md-4">
+												<div class="form-group">
+													<label>  </label>
+													<select name="sfor" style="margin-top: 7px;" class="form-control" required>
+														<option>-</option>
+														<option>am</option>
+														<option>pm</option>
+														<option>close</option>
+													</select>
+												</div> 
+											</div>
+
+										</div>
+
+										<h4 class="card-title d-flex justify-content-between">
+											<span>End Time</span> </h4>
+										<div class="row form-row">
+											<div class="col-12 col-md-4">
+												<div class="form-group">
+													<label>Hours</label>
+													<select name="ehour" class="form-control" required>
+														<option>-</option>
+														<option>01</option>
+														<option>02</option>  
+														<option>03</option>
+														<option>04</option>
+														<option>05</option>
+														<option>06</option>
+														<option>07</option>  
+														<option>08</option>
+														<option>09</option>
+														<option>10</option>
+														<option>11</option>
+														<option>12</option>
+														<option>close</option>
+													</select>
+												</div> 
+											</div>
+											<div class="col-12 col-md-4">
+												<div class="form-group">
+													<label>Minutes</label>
+													<select name="emin" class="form-control" required>
+														<option>-</option>
+														<option>00</option>
+														<option>05</option>
+														<option>10</option>  
+														<option>15</option>
+														<option>20</option>
+														<option>25</option>
+														<option>30</option>
+														<option>40</option>  
+														<option>45</option>
+														<option>50</option>
+														<option>55</option>
+														<option>60</option>
+														<option>close</option>
+													</select>
+												</div> 
+											</div>
+											<div class="col-12 col-md-4">
+												<div class="form-group">
+													<label>  </label>
+													<select name="efor" style="margin-top: 7px;" class="form-control" required>
+														<option>-</option>
+														<option>am</option>
+														<option>pm</option>
+														<option>close</option>
+													</select>
+												</div> 
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="submit-section text-center">
+								<button type="submit" class="btn btn-primary submit-btn">Save</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /Add Time Slot Modal -->
+		<!-- jQuery -->
+		<script src="/assets/js/jquery.min.js"></script>
+		
+		<!-- Bootstrap Core JS -->
+		<script src="/assets/js/popper.min.js"></script>
+		<script src="/assets/js/bootstrap.min.js"></script>
+		
+		<!-- Sticky Sidebar JS -->
+        <script src="/assets/plugins/theia-sticky-sidebar/ResizeSensor.js"></script>
+        <script src="/assets/plugins/theia-sticky-sidebar/theia-sticky-sidebar.js"></script>
+		
+		<!-- Select2 JS -->
+		<script src="/assets/plugins/select2/js/select2.min.js"></script>
+		
+		<!-- Custom JS -->
+		<script src="/assets/js/script.js"></script>
+		
+	</body>
+
+<!-- doccure/schedule-timings.html  30 Nov 2019 04:12:09 GMT -->
+</html>

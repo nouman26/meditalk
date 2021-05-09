@@ -1,0 +1,459 @@
+<!DOCTYPE html> 
+<html lang="en">
+	
+<!-- doccure/doctor-profile.html  30 Nov 2019 04:12:16 GMT -->
+<head>
+		<meta charset="utf-8">
+		<title>MediTalk</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+		
+		<!-- Favicons -->
+		<link href="/assets/img/favicon.png" rel="icon">
+		
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+		
+		<!-- Fontawesome CSS -->
+		<link rel="stylesheet" href="/assets/plugins/fontawesome/css/fontawesome.min.css">
+		<link rel="stylesheet" href="/assets/plugins/fontawesome/css/all.min.css">
+		
+		<!-- Fancybox CSS -->
+		<link rel="stylesheet" href="/assets/plugins/fancybox/jquery.fancybox.min.css">
+		
+		<!-- Main CSS -->
+		<link rel="stylesheet" href="/assets/css/style.css">
+	</head>
+	<body>
+
+		<!-- Main Wrapper -->
+		<div class="main-wrapper">
+		
+			<!-- Header -->
+			<header class="header">
+				<nav class="navbar navbar-expand-lg header-nav">
+					<div class="navbar-header">
+						<a id="mobile_btn" href="javascript:void(0);">
+							<span class="bar-icon">
+								<span></span>
+								<span></span>
+								<span></span>
+							</span>
+						</a>
+						<a href="/" class="navbar-brand logo">
+							<img src="/assets/img/logo.png" class="img-fluid" alt="Logo">
+						</a>
+					</div>
+					<div class="main-menu-wrapper">
+						<div class="menu-header">
+							<a href="/" class="menu-logo">
+								<img src="/assets/img/logo.png" class="img-fluid" alt="Logo">
+							</a>
+							<a id="menu_close" class="menu-close" href="javascript:void(0);">
+								<i class="fas fa-times"></i>
+							</a>
+						</div>
+						<ul class="main-nav">
+							<li>
+								<a href="/">Home</a>
+							</li>
+							<li>
+								<a href="/doctor">Doctors</a>
+							</li>
+							<li id="log">
+								<a href="/login">Login</a>
+							</li>
+						</ul>	 
+					</div>		 
+					<ul style="display: <%= logdis%>;" class="nav header-navbar-rht">
+						
+						<li class="nav-item">
+							<a class="nav-link header-login" href="/login">login / Signup </a>
+						</li>
+					</ul>
+					<ul style="display: <%= logpro%>;" class="nav header-navbar-rht">
+						
+						<!-- User Menu -->
+						<li class="nav-item dropdown has-arrow logged-item">
+							<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+								<span class="user-img">
+									<img class="rounded-circle" src="/user_images/<%= datap.image%>" width="31" alt="Darren Elder">
+								</span>
+							</a>
+							<div class="dropdown-menu dropdown-menu-right">
+								<div class="user-header">
+									<div class="avatar avatar-sm">
+										<img src="/user_images/<%= datap.image%>" alt="User Image" class="avatar-img rounded-circle">
+									</div>
+									<div class="user-text">
+										<h6><%= datap.name%></h6>
+										<p class="text-muted mb-0"><%= occupation%></p>
+									</div>
+								</div>
+								<a class="dropdown-item" href="/Profile/<%= datap.name%>">Profile</a>
+								<a class="dropdown-item" href="/logout">Logout</a>
+							</div>
+						</li>
+						<!-- /User Menu -->
+						
+					</ul>
+				</nav>
+			</header>
+			<!-- /Header -->
+			
+			<!-- Breadcrumb -->
+			<div class="breadcrumb-bar">
+				<div class="container-fluid">
+					<div class="row align-items-center">
+						<div class="col-md-12 col-12">
+							<nav aria-label="breadcrumb" class="page-breadcrumb">
+								<ol class="breadcrumb">
+									<li class="breadcrumb-item"><a href="/">Home</a></li>
+									<li class="breadcrumb-item active" aria-current="page">Doctor Profile</li>
+								</ol>
+							</nav>
+							<h2 class="breadcrumb-title">Doctor Profile</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /Breadcrumb -->
+			
+			<!-- Page Content -->
+			<div class="content">
+				<div class="container">
+
+					<!-- Doctor Widget -->
+					<div class="card">
+						<div class="card-body">
+							<div class="doctor-widget">
+								<div class="doc-info-left">
+									<div class="doctor-img">
+										<img src="/user_images/<%= data.image%>" class="img-fluid" alt="User Image">
+									</div>
+									<div class="doc-info-cont">
+										<h4 class="doc-name"><%= data.name%></h4>
+										<p class="exp-year"><%= data.education%></p>
+							
+										<div class="clinic-details">
+											<p class="doc-location"><i class="fas fa-map-marker-alt"></i> <%= data.clinic_address%></p>
+										</div>
+										<div class="clinic-services">
+											<span><%= data.specialist%></span>
+										</div>
+									</div>
+								</div>
+								<div class="doc-info-right">
+									<div class="clini-infos">
+										<ul>
+											<!-- <li><i class="far fa-thumbs-up"></i> 99%</li> -->
+											<li><i class="fas fa-map-marker-alt"></i> <%= data.clinic_address%></li>
+											<li><i class="far fa-money-bill-alt"></i> <%= data.price%></li>
+										</ul>
+									</div>
+									
+									<div class="clinic-booking">
+										<a class="apt-btn" href="/booking/<%= data.name%>">Book Appointment</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- /Doctor Widget -->
+
+
+					<div class="row">
+						<div class="col-md-12">
+							<div class="card dash-card">
+								<div class="card-body">
+									<div class="row">
+										<div class="col-md-12 col-lg-4">
+											<div class="dash-widget dct-border-rht">
+												<div class="circle-bar circle-bar1">
+													<div class="circle-graph1" data-percent="75">
+														<img src="/assets/img/icon-01.png" class="img-fluid" alt="patient">
+													</div>
+												</div>
+												<div class="dash-widget-info">
+													<h6>Total Patient</h6>
+													<h3><%= count%></h3>
+													<p class="text-muted">Till Today</p>
+												</div>
+											</div>
+										</div>
+										
+										<div class="col-md-12 col-lg-4">
+											<div class="dash-widget dct-border-rht">
+												<div class="circle-bar circle-bar2">
+													<div class="circle-graph2" data-percent="65">
+														<img src="/assets/img/icon-02.png" class="img-fluid" alt="Patient">
+													</div>
+												</div>
+												<div class="dash-widget-info">
+													<h6>Today Patient</h6>
+													<h3><%= counttoday%></h3>
+													<p class="text-muted today"></p>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+					<!-- Doctor Details Tab -->
+					<div class="card">
+						<div class="card-body pt-0">
+						
+							<!-- Tab Menu -->
+							<nav class="user-tabs mb-4">
+								<ul class="nav nav-tabs nav-tabs-bottom nav-justified">
+									<li class="nav-item">
+										<a class="nav-link active" href="#doc_overview" data-toggle="tab">Overview</a>
+									</li>
+								</ul>
+							</nav>
+							<!-- /Tab Menu -->
+							
+							<!-- Tab Content -->
+							<div class="tab-content pt-0">
+							
+								<!-- Overview Content -->
+								<div role="tabpanel" id="doc_overview" class="tab-pane fade show active">
+									<div class="row">
+										<div class="col-md-12 col-lg-9">
+										
+											<!-- About Details -->
+											<div class="widget about-widget">
+												<h4 class="widget-title">About Me</h4>
+												<p><%= data.biography%></p>
+											</div>
+											<!-- /About Details -->
+										
+											<!-- Education Details -->
+											<div class="widget education-widget">
+												<h4 class="widget-title">Services</h4>
+												<div class="experience-box">
+													<ul class="experience-list">
+														<% data.service.split(",").forEach(ser => { %>
+														<li>
+															<div class="experience-user">
+																<div class="before-circle"></div>
+															</div>
+															<div class="experience-content">
+																
+																<div class="timeline-content">
+																	<a href="#/" class="name"><%= ser%></a>
+																	<!-- <span class="time"><%=data.year_of_completion%></span> -->
+																</div>
+															</div>
+														</li>
+														<% })%>
+													</ul>
+												</div>
+											</div>
+											<!-- /Education Details -->
+									
+											<!-- Education Details -->
+											<div class="widget education-widget">
+												<h4 class="widget-title">Education</h4>
+												<div class="experience-box">
+													<ul class="experience-list">
+														<% data.education.split(",").forEach(edu => { %>
+														<li>
+															<div class="experience-user">
+																<div class="before-circle"></div>
+															</div>
+															<div class="experience-content">
+																
+																<div class="timeline-content">
+																	<a href="#/" class="name"><%= edu%></a>
+																	<!-- <span class="time"><%=data.year_of_completion%></span> -->
+																</div>
+															</div>
+														</li>
+														<% })%>
+													</ul>
+												</div>
+											</div>
+											<!-- /Education Details -->
+									
+											<!-- Experience Details -->
+											<div class="widget experience-widget">
+												<h4 class="widget-title">Recent Work & Experience</h4>
+												<div class="experience-box">
+													<ul class="experience-list">
+														<li>
+															<div class="experience-user">
+																<div class="before-circle"></div>
+															</div>
+															<div class="experience-content">
+																<div class="timeline-content">
+																	<a href="#/" class="name"><%= data.hospital_name%></a>
+																	<span class="time"><%= data.from%> - <%= data.to%></span>
+																</div>
+															</div>
+														</li>
+													</ul>
+												</div>
+											</div>
+											<!-- /Experience Details -->
+								
+											<!-- Awards Details -->
+											<div class="widget awards-widget">
+												<h4 class="widget-title">Recent Award</h4>
+												<div class="experience-box">
+													<% data.awards.split(",").forEach(award => { %>
+													<ul class="experience-list">
+														<li>
+															<div class="experience-user">
+																<div class="before-circle"></div>
+															</div>
+															<div class="experience-content">
+																<div class="timeline-content">
+																	<h4 class="exp-title"><%= award%></h4>
+																</div>
+															</div>
+														</li>
+														<% }) %>
+													</ul>
+												</div>
+											</div>
+											<!-- /Awards Details -->
+											
+								
+										</div>
+									</div>
+								</div>
+								<!-- /Overview Content -->
+								
+								
+							</div>
+						</div>
+					</div>
+					<!-- /Doctor Details Tab -->
+
+				</div>
+			</div>		
+			<!-- /Page Content -->
+   
+			<!-- Footer -->
+			<footer class="footer">
+				
+				<!-- Footer Top -->
+				<div class="footer-top">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-lg-6 col-md-6">
+							
+								<!-- Footer Widget -->
+								<div class="footer-widget footer-about">
+									<div class="footer-logo">
+										<img src="/assets/img/footer-logo.png" alt="logo">
+									</div>
+									<div class="footer-about-content">
+										<div class="social-icon">
+											<ul>
+												<li>
+													<a href="#" target="_blank"><i class="fab fa-facebook-f"></i> </a>
+												</li>
+												<li>
+													<a href="#" target="_blank"><i class="fab fa-twitter"></i> </a>
+												</li>
+												<li>
+													<a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+												</li>
+												<li>
+													<a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+												</li>
+												<li>
+													<a href="#" target="_blank"><i class="fab fa-dribbble"></i> </a>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+								<!-- /Footer Widget -->
+								
+							</div>
+							<div class="col-lg-6 col-md-6">
+							
+								<!-- Footer Widget -->
+								<div class="footer-widget footer-contact">
+									<h2 class="footer-title">Contact Us</h2>
+									<div class="footer-contact-info">
+										<div class="footer-address">
+											<span><i class="fas fa-map-marker-alt"></i></span>
+											<p> 3556  Beech Street, San Francisco,<br> California, CA 94108 </p>
+										</div>
+										<p>
+											<i class="fas fa-phone-alt"></i>
+											+1 315 369 5943
+										</p>
+										<p class="mb-0">
+											<i class="fas fa-envelope"></i>
+											doccure@example.com
+										</p>
+									</div>
+								</div>
+								<!-- /Footer Widget -->
+								
+							</div>
+							
+						</div>
+					</div>
+				</div>
+				<!-- /Footer Top -->
+				
+				<!-- Footer Bottom -->
+				<div class="footer-bottom">
+					<div class="container-fluid">
+					
+						<!-- Copyright -->
+						<div class="copyright">
+								<h5 style="text-align: center; color: white;" class="lin">© 2021|All Rights Reserved By MediTalk</h5>
+						</div>
+						<!-- /Copyright -->
+						
+					</div>
+				</div>
+				<!-- /Footer Bottom -->
+				
+			</footer>
+			<!-- /Footer -->
+		   
+		</div>
+		<!-- /Main Wrapper -->
+		
+		<!-- jQuery -->
+		<script src="/assets/js/jquery.min.js"></script>
+		
+		<!-- Bootstrap Core JS -->
+		<script src="/assets/js/popper.min.js"></script>
+		<script src="/assets/js/bootstrap.min.js"></script>
+		
+		<!-- Fancybox JS -->
+		<script src="/assets/plugins/fancybox/jquery.fancybox.min.js"></script>
+		<!-- Sticky Sidebar JS -->
+        <script src="/assets/plugins/theia-sticky-sidebar/ResizeSensor.js"></script>
+        <script src="/assets/plugins/theia-sticky-sidebar/theia-sticky-sidebar.js"></script>
+		
+		<!-- Circle Progress JS -->
+		<script src="/assets/js/circle-progress.min.js"></script>
+		<!-- Custom JS -->
+		<script src="/assets/js/script.js"></script>
+		<script>
+			var today = new Date();
+			var dd = String(today.getDate()).padStart(2, '0');
+			var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+			var yyyy = today.getFullYear();
+			today = mm + '/' + dd + '/' + yyyy;
+			const date = new Date();
+			const month= date.toLocaleString('default', { month: 'long' });
+			document.getElementsByClassName('today')[0].innerText= dd +" " +	month +" "+ yyyy;
+		</script>
+	</body>
+
+<!-- doccure/doctor-profile.html  30 Nov 2019 04:12:16 GMT -->
+</html>
