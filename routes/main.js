@@ -61,7 +61,7 @@ router.get("/",(req,res)=>{
             if(err.code === 11000) {
               error = 'That email is already taken, try another.';
             }
-            res.render('blank', { error: error });
+            res.render('register.jade', { error: error ,data:data});
         }
         if (profileemail == "" || profileemail == null || profileemail == undefined){
             res.render("index",{read:data,data:"",logpro:"none",logdis:"",occupation:""})
