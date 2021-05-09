@@ -54,15 +54,9 @@ var today = new Date();
 	today = dd + '/' + mm + '/' + yyyy;
 
 router.get("/",(req,res)=>{
-    var filter_data=DoctorBasicInfoModel.find();
+    var filter_data=DoctorBasicInfoModel.find({});
     filter_data.exec(function(err,data){
-        if (err) {
-            var error = 'Something bad happened, try again!';
-            if(err.code === 11000) {
-              error = 'That email is already taken, try another.';
-            }
-            res.render('blank', { error: error ,data:data});
-        }
+        if (err) throw error;
         if (profileemail == "" || profileemail == null || profileemail == undefined){
             res.render("index",{read:data,data:"",logpro:"none",logdis:"",occupation:""})
         }
