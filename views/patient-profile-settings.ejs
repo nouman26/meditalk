@@ -140,7 +140,7 @@
 										<div class="col-md-6">
 											<div class="form-group">
 												<label>Phone Number<span class="text-danger">*</span></label>
-												<input type="text" name="phone_no" class="form-control" required>
+												<input type="text" name="phone_no" class="form-control" data-inputmask="'mask': '9999-9999999'" required onkeypress='validate(event)'>
 											</div>
 										</div>
 										<div class="col-md-6">
@@ -156,19 +156,30 @@
 										<div class="col-md-6">
 											<div class="form-group">
 												<label>Blood Group<span class="text-danger">*</span></label>
-												<input type="text" class="form-control" name="blood_group" required>
+												<select class="form-control select" name="blood_group" required>
+													<option>Select</option>
+													<option>O<sup>+</sup></option>
+													<option>O<sup>-</sup></option>
+													<option>A<sup>+</sup></option>
+													<option>A<sup>-</sup></option>
+													<option>B<sup>+</sup></option>
+													<option>B<sup>-</sup></option>
+													<option>AB<sup>+</sup></option>
+													<option>AB<sup>-</sup></option>
+													
+												</select>
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
 												<label>Age<span class="text-danger">*</span></label>
-												<input type="text" class="form-control" name="age" required>
+												<input id="dob" type="text" class="form-control" name="age" required readonly>
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
 												<label>Date of Birth<span class="text-danger">*</span></label>
-												<input type="text" class="form-control" name="date_of_birth"required>
+												<input id="age" type="text" class="form-control" name="date_of_birth" data-inputmask="'mask': '99/99/9999'" required onkeypress='validate(event)'>
                                                 <small class="form-text text-muted">Formate:day/month/year</small>
 											</div>
 										</div>
@@ -200,12 +211,12 @@
 				<div class="footer-top">
 					<div class="container-fluid">
 						<div class="row">
-							<div class="col-lg-6 col-md-6">
+							<div class="col-lg-3 col-md-6">
 							
 								<!-- Footer Widget -->
 								<div class="footer-widget footer-about">
 									<div class="footer-logo">
-										<img src="/assets/img/footer-logo.png" alt="logo">
+										<img style="width: 80%;" src="/assets/img/footer-logo.png" alt="logo">
 									</div>
 									<div class="footer-about-content">
 										<div class="social-icon">
@@ -230,27 +241,85 @@
 									</div>
 								</div>
 								<!-- /Footer Widget -->
-								
+								<div class="footer-widget footer-menu">
+									<h2 style="margin-top: 20px;" class="footer-title">Lab Test</h2>
+									<ul style="color: white;">
+										<li>Labs in Lahore</li>
+										<li>Labs in Karachi</li>
+										<li>Labs in Islamabad</li>
+										<li>Labs in Peshawar</li>
+										<li>Labs in Quetta</li>
+									</ul>
+								</div>
 							</div>
-							<div class="col-lg-6 col-md-6">
+							
+							<div class="col-lg-3 col-md-6">
 							
 								<!-- Footer Widget -->
-								<div class="footer-widget footer-contact">
-									<h2 class="footer-title">Contact Us</h2>
-									<div class="footer-contact-info">
-										<div class="footer-address">
-											<span><i class="fas fa-map-marker-alt"></i></span>
-											<p> 3556  Beech Street, San Francisco,<br> California, CA 94108 </p>
-										</div>
-										<p>
-											<i class="fas fa-phone-alt"></i>
-											+1 315 369 5943
-										</p>
-										<p class="mb-0">
-											<i class="fas fa-envelope"></i>
-											doccure@example.com
-										</p>
-									</div>
+								<div class="footer-widget footer-menu">
+									<ul style="color: white;">
+										<li>Gynecologist in Lahore</li>
+										<li>Gastroenterologist in Lahore</li>
+										<li>Orthopedic in Lahore</li>
+										<li>Neuro Physician in Lahore</li>
+										<li>General Physician in Lahore</li>
+										<li>Cardiologist in Lahore</li>
+										<li>Psyschiatrist in Lahore</li>
+										<li>Dentist in Lahore</li>
+										<li>Eye Specialist in Lahore</li>
+										<li>Child Specialist in Lahore</li>
+										<li>ENT Specialist in Lahore</li>
+										<li>Dermatologist in Lahore</li>
+										<li>Urologist in Lahore</li>
+									</ul>
+								</div>
+								<!-- /Footer Widget -->
+								
+							</div>
+							
+							<div class="col-lg-3 col-md-6">
+							
+								<!-- Footer Widget -->
+								<div class="footer-widget footer-menu">
+									<ul style="color: white;">
+										<li>Gynecologist in Karachi</li>
+										<li>Gastroenterologist in Karachi</li>
+										<li>Orthopedic in Karachi</li>
+										<li>Neuro Physician in Karachi</li>
+										<li>General Physician in Karachi</li>
+										<li>Cardiologist in Karachi</li>
+										<li>Psyschiatrist in Karachi</li>
+										<li>Dentist in Karachi</li>
+										<li>Eye Specialist in Karachi</li>
+										<li>Child Specialist in Karachi</li>
+										<li>ENT Specialist in Karachi</li>
+										<li>Dermatologist in Karachi</li>
+										<li>Urologist in Karachi</li>
+									</ul>
+								</div>
+								<!-- /Footer Widget -->
+								
+							</div>
+							
+							<div class="col-lg-3 col-md-6">
+							
+								<!-- Footer Widget -->
+								<div class="footer-widget footer-menu">
+									<ul style="color: white;">
+										<li>Gynecologist in Islamabad</li>
+										<li>Gastroenterologist in Islamabad</li>
+										<li>Orthopedic in Islamabad</li>
+										<li>Neuro Physician in Islamabad</li>
+										<li>General Physician in Islamabad</li>
+										<li>Cardiologist in Islamabad</li>
+										<li>Psyschiatrist in Islamabad</li>
+										<li>Dentist in Islamabad</li>
+										<li>Eye Specialist in Islamabad</li>
+										<li>Child Specialist in Islamabad</li>
+										<li>ENT Specialist in Islamabad</li>
+										<li>Dermatologist in Islamabad</li>
+										<li>Urologist in Islamabad</li>
+									</ul>
 								</div>
 								<!-- /Footer Widget -->
 								
@@ -262,12 +331,12 @@
 				<!-- /Footer Top -->
 				
 				<!-- Footer Bottom -->
-				<div class="footer-bottom">
+                <div class="footer-bottom">
 					<div class="container-fluid">
 					
 						<!-- Copyright -->
 						<div class="copyright">
-								<h5 style="text-align: center; color: white;" class="lin">© 2021|All Rights Reserved By MediTalk</h5>
+							<p style="text-align: center; color: white;">© 2021|All Rights Reserved By MediTalk</p>
 						</div>
 						<!-- /Copyright -->
 						
@@ -306,7 +375,50 @@
 		
 		<!-- Custom JS -->
 		<script src="assets/js/script.js"></script>
-		
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+   		<script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/jquery.inputmask.bundle.js"></script>
+		<script>
+			$(":input").inputmask();
+		 
+		   function validate(evt) {
+		   var theEvent = evt || window.event;
+		 
+		   // Handle paste
+		   if (theEvent.type === 'paste') {
+			   key = event.clipboardData.getData('text/plain');
+		   } else {
+		   // Handle key press
+			   var key = theEvent.keyCode || theEvent.which;
+			   key = String.fromCharCode(key);
+		   }
+		   var regex = /[0-9]|\./;
+		   if( !regex.test(key) ) {
+			 theEvent.returnValue = false;
+			 if(theEvent.preventDefault) theEvent.preventDefault();
+		   }
+		 }
+
+		function mouse(){
+			var age=document.getElementById("age");
+			var dob = new Date(age.value);
+			
+			//calculate month difference from current date in time
+			var month_diff = Date.now() - dob.getTime();
+			
+			//convert the calculated difference in date format
+			var age_dt = new Date(month_diff); 
+			
+			//extract year from date    
+			var year = age_dt.getUTCFullYear();
+			
+			//now calculate the age of the user
+			var age = Math.abs(year - 1970);
+			
+			//display the calculated age
+			var dob=document.getElementById("dob").value=age;
+			}
+			document.getElementById("age").addEventListener("mouseleave", mouse);
+	  </script>
 	</body>
 
 <!-- doccure/doctor-profile-settings.html  30 Nov 2019 04:12:15 GMT -->

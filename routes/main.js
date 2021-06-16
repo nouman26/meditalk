@@ -6,6 +6,7 @@ const mongoose=require("mongoose");
 var fs = require('fs');
 const multer = require("multer");
 const schema=require("../modules/schema");
+const { error } = require('console');
 
 var app = express();
 
@@ -45,6 +46,7 @@ var occupation;
 var display="none";
 var dispmsg="none";
 var dispdrmsg="none";
+var chkday="";
 var logdata,occup; // to hold login details
 var imagename;
 var today = new Date();
@@ -159,7 +161,7 @@ router.post("/doctor-register",(req,res)=>{
             if (err) throw error;
             if (data=="" || data==null || data==undefined){
                 var reg=new SignDoctorModel({
-                    name:req.body.name,
+                    name:"Dr."+req.body.name,
                     email:req.body.email.trim(),
                     password:req.body.password
                 }) 
@@ -286,7 +288,6 @@ router.post("/change-password",(req,res)=>{
     DoctorsignModel=myDBsign.model("doctor",signschema);
     PatientsignModel=myDBsign.model("patient",signschema);
     if(occupation=="doctor"){
-        console.log(req.body.email)
         var filter_doctor_sign=DoctorsignModel.findOneAndUpdate({email:req.body.email},{
             name:req.body.name, //Doctor Name
             email:req.body.email,
@@ -516,6 +517,99 @@ router.get("/patient_pending_appointment/:email",(req,res)=>{
     }
 })
 
+router.post("/patient/appointment/cancel",(req,res)=>{
+    var PatModel=TempappPat.model(req.body.email,appoint_schema);
+    var DrModel=TempappDr.model(req.body.doctor,appoint_schema);
+    var DoctorSheduleModel=DrShedule.model(req.body.doctor,doctor_shedule_schema);
+
+    var filter_doctor_time=DoctorSheduleModel.findOneAndDelete({$and:[{date:req.body.date},{time:req.body.time}]})
+    var filter_doctor_and_delete=DrModel.findOneAndDelete({$and:[{date:req.body.date},{time:req.body.time},{email:req.body.email}]})
+    var filter_doctor=PatModel.findOneAndDelete({$and:[{date:req.body.date},{time:req.body.time},{name:req.body.doctor}]})
+
+    filter_doctor_time.exec(function(){
+        filter_doctor_and_delete.exec(function(){
+            filter_doctor.exec(function(){
+                fs.unlinkSync(path.join(__dirname, '../public/reciepts/'+req.body.img));
+                res.redirect("/profile/"+req.body.email)
+            })
+        });
+    });
+})
+
+router.post("/patient/reject_appointment/delete",(req,res)=>{
+    var PatModel=TempappPat.model(req.body.email,appoint_schema);
+    var filter_doctor=PatModel.findOneAndDelete({$and:[{date:req.body.date},{time:req.body.time},{name:req.body.doctor}]})
+    filter_doctor.exec(function(){
+        fs.unlinkSync(path.join(__dirname, '../public/reciepts/'+req.body.img));
+        res.redirect("/profile/"+req.body.email)
+    })
+})
+
+router.get("/patient/delete_profile/:email",(req,res)=>{
+    var PatModel=TempappPat.model(profileemail,appoint_schema);
+    var filter_doctor_name=PatModel.find();
+    var pm_history=PMhistory.model(profileemail,patient_medical_history_schema);
+    
+    var filter_pm_history=pm_history.find();
+    var signmodel=myDBsign.model("patient",signschema);
+    
+    var delete_patient=signmodel.findOneAndDelete({email:profileemail})
+    var delete_basic_info=PatientBasicInfoModel.findOneAndDelete({email:profileemail})
+    
+    delete_patient.exec(function(){
+        delete_basic_info.exec(function(){
+            filter_doctor_name.exec(function(err,data){
+                if(err) throw error;
+                else if(data[0] !== undefined){
+                    PatModel.countDocuments({},function(err,count){
+                        if(err) throw error;
+                        for(var i=0;i<count;i++){
+                            var Dr=TempappDr.model(data[i].name,appoint_schema);
+                            var DoctorSheduleModel=DrShedule.model(data[i].name,doctor_shedule_schema);
+                            var filter_doctor_and_delete=Dr.findOneAndDelete({email:profileemail})
+                            var filter_doctor_time=DoctorSheduleModel.findOneAndDelete({$and:[{date:data[i].date},{time:data[i].time}]})
+                            filter_doctor_and_delete.exec()
+                            filter_doctor_time.exec()
+                            fs.unlinkSync(path.join(__dirname, '../public/reciepts/'+data[i].image));
+                        }
+                        TempappPat.dropCollection(profileemail+"s", function (err, result) {
+                            if (err) throw error;
+                            filter_pm_history.exec(function(err,datapm){
+                                if(datapm[0] !== undefined){
+                                    PMhistory.dropCollection(profileemail+"s", function (err, result) {
+                                        if (err) throw error;
+                                        fs.unlinkSync(path.join(__dirname, '../public/user_images/'+req.params.email));
+                                        res.redirect("/login")
+                                    })
+                                }
+                                else{
+                                    fs.unlinkSync(path.join(__dirname, '../public/user_images/'+req.params.email));
+                                    res.redirect("/login")
+                                }
+                            })
+                        })
+                    })
+                }
+                else{
+                    filter_pm_history.exec(function(err,datapm){
+                        if(datapm[0] !== undefined){
+                            PMhistory.dropCollection(profileemail+"s", function (err, result) {
+                                if (err) throw error;
+                                fs.unlinkSync(path.join(__dirname, '../public/user_images/'+req.params.email));
+                                res.redirect("/login")
+                            })
+                        }
+                        else{
+                            fs.unlinkSync(path.join(__dirname, '../public/user_images/'+req.params.email));
+                            res.redirect("/login")
+                        }
+                    })
+                }
+            })
+        })
+    })
+})
+
 
 
 // Patient Medical Historry
@@ -543,31 +637,344 @@ router.post("/medical_history/add/:email",(req,res)=>{
 })
 
 router.get("/booking/:drname",(req,res)=>{
-    var day1,day2,day3,day4,day5,day6,day7
+    var day1,day2,day3,day4,day5,day6,day7,day8,day9,day10,day11,day12,day13,day14;
 
     var today = new Date();
 	var dd1 = String(today.getDate()).padStart(2, '0');
 	var mm1 = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-	var yyyy = today.getFullYear();
-	
-    var dd2 = String(today.getDate() + 1).padStart(2, '0');
+    
+	var dd2 = String(today.getDate() + 1).padStart(2, '0');
 	var mm2 = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-
-    var dd3 = String(today.getDate()+2).padStart(2, '0');
+    
+	var dd3 = String(today.getDate() + 2).padStart(2, '0');
 	var mm3 = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-
-    var dd4 = String(today.getDate()+3).padStart(2, '0');
+    
+	var dd4 = String(today.getDate() + 3).padStart(2, '0');
 	var mm4 = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-
-    var dd5 = String(today.getDate()+4).padStart(2, '0');
+    
+	var dd5 = String(today.getDate() + 4).padStart(2, '0');
 	var mm5 = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-
-    var dd6 = String(today.getDate()+5).padStart(2, '0');
+    
+	var dd6 = String(today.getDate() + 5).padStart(2, '0');
 	var mm6 = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-
-    var dd7 = String(today.getDate()+6).padStart(2, '0');
+    
+	var dd7 = String(today.getDate() + 6).padStart(2, '0');
 	var mm7 = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    
+	var dd8 = String(today.getDate() + 7).padStart(2, '0');
+	var mm8 = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    
+	var dd9 = String(today.getDate() + 8).padStart(2, '0');
+	var mm9 = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    
+	var dd10 = String(today.getDate() + 9).padStart(2, '0');
+	var mm10 = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    
+	var dd11 = String(today.getDate() + 10).padStart(2, '0');
+	var mm11 = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    
+	var dd12 = String(today.getDate() + 11).padStart(2, '0');
+	var mm12 = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    
+	var dd13 = String(today.getDate() + 12).padStart(2, '0');
+	var mm13 = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    
+	var dd14 = String(today.getDate() + 13).padStart(2, '0');
+	var mm14 = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    
+	var yyyy = today.getFullYear();
 
+    
+    if (mm1 == 2){
+        if (dd2>28){
+            dd2=dd2-28;
+            mm2 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        if (dd3>28){
+            dd3=dd3-28;
+            mm3 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        if (dd2>28){
+            dd4=dd4-28;
+            mm4 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        if (dd5>28){
+            dd5=dd5-28;
+            mm5 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        if (dd6>28){
+            dd6=dd6-28;
+            mm6 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        if (dd7>28){
+            dd7=dd7-28;
+            mm7 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        if (dd8>28){
+            dd8=dd8-28;
+            mm8 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        if (dd9>28){
+            dd9=dd9-28;
+            mm9 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        if (dd10>28){
+            dd10=dd10-28;
+            mm10 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        if (dd11>28){
+            dd11=dd11-28;
+            mm11 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        if (dd12>28){
+            dd12=dd12-28;
+            mm12 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        if (dd13>28){
+            dd13=dd13-28;
+            mm13 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        if (dd14>28){
+            dd14=14-28;
+            mm14 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        
+    }
+    else if (mm1==12){
+        if (dd2>31){
+            dd2=dd2-31;
+            mm2 = String(today.getMonth() - 11).padStart(2, '0'); //January is 0!
+            yyyy = today.getFullYear()+1;
+        }
+        if (dd3>31){
+            dd3=dd3-31;
+            mm3 = String(today.getMonth() - 11).padStart(2, '0'); //January is 0!
+            yyyy = today.getFullYear()+1;
+        }
+        if (dd2>31){
+            dd4=dd4-31;
+            mm4 = String(today.getMonth() - 11).padStart(2, '0'); //January is 0!
+            yyyy = today.getFullYear()+1;
+        }
+        if (dd5>31){
+            dd5=dd5-31;
+            mm5 = String(today.getMonth() - 11).padStart(2, '0'); //January is 0!
+            yyyy = today.getFullYear()+1;
+        }
+        if (dd6>31){
+            dd6=dd6-31;
+            mm6 = String(today.getMonth() - 11).padStart(2, '0'); //January is 0!
+            yyyy = today.getFullYear()+1;
+        }
+        if (dd7>31){
+            dd7=dd7-31;
+            mm7 = String(today.getMonth() - 11).padStart(2, '0'); //January is 0!
+            yyyy = today.getFullYear()+1;
+        }
+        if (dd8>31){
+            dd8=dd8-31;
+            mm8 = String(today.getMonth() - 11).padStart(2, '0'); //January is 0!
+            yyyy = today.getFullYear()+1;
+        }
+        if (dd9>31){
+            dd9=dd9-31;
+            mm9 = String(today.getMonth() - 11).padStart(2, '0'); //January is 0!
+            yyyy = today.getFullYear()+1;
+        }
+        if (dd10>31){
+            dd10=dd10-31;
+            mm10 = String(today.getMonth() - 11).padStart(2, '0'); //January is 0!
+            yyyy = today.getFullYear()+1;
+        }
+        if (dd11>31){
+            dd11=dd11-31;
+            mm11 = String(today.getMonth() - 11).padStart(2, '0'); //January is 0!
+            yyyy = today.getFullYear()+1;
+        }
+        if (dd12>31){
+            dd12=dd12-31;
+            mm12 = String(today.getMonth() - 11).padStart(2, '0'); //January is 0!
+            yyyy = today.getFullYear()+1;
+        }
+        if (dd13>31){
+            dd13=dd13-31;
+            mm13 = String(today.getMonth() - 11).padStart(2, '0'); //January is 0!
+            yyyy = today.getFullYear()+1;
+        }
+        if (dd14>31){
+            dd14=14-31;
+            mm14 = String(today.getMonth() - 11).padStart(2, '0'); //January is 0!
+            yyyy = today.getFullYear()+1;
+        }
+        
+    }
+    else if (mm1 % 2 == 1 && mm1<8){
+        if (dd2>31){
+            dd2=dd2-31;
+            mm2 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        if (dd3>31){
+            dd3=dd3-31;
+            mm3 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        if (dd2>31){
+            dd4=dd4-31;
+            mm4 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        if (dd5>31){
+            dd5=dd5-31;
+            mm5 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        if (dd6>31){
+            dd6=dd6-31;
+            mm6 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        if (dd7>31){
+            dd7=dd7-31;
+            mm7 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        if (dd8>31){
+            dd8=dd8-31;
+            mm8 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        if (dd9>31){
+            dd9=dd9-31;
+            mm9 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        if (dd10>31){
+            dd10=dd10-31;
+            mm10 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        if (dd11>31){
+            dd11=dd11-31;
+            mm11 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        if (dd12>31){
+            dd12=dd12-31;
+            mm12 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        if (dd13>31){
+            dd13=dd13-31;
+            mm13 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        if (dd14>31){
+            dd14=14-31;
+            mm14 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        
+    }
+    else if (mm1 % 2 == 0 && mm1>7){
+        if (dd2>31){
+            dd2=dd2-31;
+            mm2 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        if (dd3>31){
+            dd3=dd3-31;
+            mm3 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        if (dd2>31){
+            dd4=dd4-31;
+            mm4 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        if (dd5>31){
+            dd5=dd5-31;
+            mm5 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        if (dd6>31){
+            dd6=dd6-31;
+            mm6 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        if (dd7>31){
+            dd7=dd7-31;
+            mm7 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        if (dd8>31){
+            dd8=dd8-31;
+            mm8 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        if (dd9>31){
+            dd9=dd9-31;
+            mm9 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        if (dd10>31){
+            dd10=dd10-31;
+            mm10 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        if (dd11>31){
+            dd11=dd11-31;
+            mm11 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        if (dd12>31){
+            dd12=dd12-31;
+            mm12 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        if (dd13>31){
+            dd13=dd13-31;
+            mm13 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        if (dd14>31){
+            dd14=14-31;
+            mm14 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        
+    }
+    else{
+        if (dd2>30){
+            dd2=dd2-30;
+            mm2 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        if (dd3>30){
+            dd3=dd3-30;
+            mm3 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        if (dd2>30){
+            dd4=dd4-30;
+            mm4 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        if (dd5>30){
+            dd5=dd5-30;
+            mm5 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        if (dd6>30){
+            dd6=dd6-30;
+            mm6 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        if (dd7>30){
+            dd7=dd7-30;
+            mm7 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        if (dd8>30){
+            dd8=dd8-30;
+            mm8 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        if (dd9>30){
+            dd9=dd9-30;
+            mm9 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        if (dd10>30){
+            dd10=dd10-30;
+            mm10 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        if (dd11>30){
+            dd11=dd11-30;
+            mm11 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        if (dd12>30){
+            dd12=dd12-30;
+            mm12 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        if (dd13>30){
+            dd13=dd13-30;
+            mm13 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        if (dd14>30){
+            dd14=14-30;
+            mm14 = String(today.getMonth() + 2).padStart(2, '0'); //January is 0!
+        }
+        
+    }
+    
+    
     day1 = dd1 + '/' + mm1 + '/' + yyyy;
     day2 = dd2 + '/' + mm2 + '/' + yyyy;
     day3 = dd3 + '/' + mm3 + '/' + yyyy;
@@ -575,7 +982,14 @@ router.get("/booking/:drname",(req,res)=>{
     day5 = dd5 + '/' + mm5 + '/' + yyyy;
     day6 = dd6 + '/' + mm6 + '/' + yyyy;
     day7 = dd7 + '/' + mm7 + '/' + yyyy;
-
+    day8 = dd8 + '/' + mm8 + '/' + yyyy;
+    day9 = dd9 + '/' + mm9 + '/' + yyyy;
+    day10 = dd10 + '/' + mm10 + '/' + yyyy;
+    day11 = dd11 + '/' + mm11 + '/' + yyyy;
+    day12 = dd12 + '/' + mm12 + '/' + yyyy;
+    day13 = dd13 + '/' + mm13 + '/' + yyyy;
+    day14 = dd14 + '/' + mm14 + '/' + yyyy;
+    
     DoctorSheduleModel=DrShedule.model(req.params.drname,doctor_shedule_schema);
     DoctorSheduleDayModel=DrSheduleTime.model(req.params.drname,doctor_day_vise_shedule_schema);
 
@@ -596,6 +1010,13 @@ router.get("/booking/:drname",(req,res)=>{
     var filter_doctor_time5=DoctorSheduleModel.find({date:day5})
     var filter_doctor_time6=DoctorSheduleModel.find({date:day6})
     var filter_doctor_time7=DoctorSheduleModel.find({date:day7})
+    var filter_doctor_time8=DoctorSheduleModel.find({date:day8})
+    var filter_doctor_time9=DoctorSheduleModel.find({date:day9})
+    var filter_doctor_time10=DoctorSheduleModel.find({date:day10})
+    var filter_doctor_time11=DoctorSheduleModel.find({date:day11})
+    var filter_doctor_time12=DoctorSheduleModel.find({date:day12})
+    var filter_doctor_time13=DoctorSheduleModel.find({date:day13})
+    var filter_doctor_time14=DoctorSheduleModel.find({date:day14})
         filter_doctor_time1.exec(function(err,data1){
             if (err) throw error;
             filter_doctor_time2.exec(function(err,data2){
@@ -610,39 +1031,63 @@ router.get("/booking/:drname",(req,res)=>{
                                 if (err) throw error;
                                 filter_doctor_time7.exec(function(err,data7){
                                     if (err) throw error;
-                                    filter_doctor_info.exec(function(err,datadr){
+                                    filter_doctor_time8.exec(function(err,data8){
                                         if (err) throw error;
-                                        filter_mon.exec(function(err,datamon){
+                                        filter_doctor_time9.exec(function(err,data9){
                                             if (err) throw error;
-                                            filter_tue.exec(function(err,datatue){
+                                            filter_doctor_time10.exec(function(err,data10){
                                                 if (err) throw error;
-                                                filter_wed.exec(function(err,datawed){
+                                                filter_doctor_time11.exec(function(err,data11){
                                                     if (err) throw error;
-                                                    filter_thu.exec(function(err,datathu){
+                                                    filter_doctor_time12.exec(function(err,data12){
                                                         if (err) throw error;
-                                                        filter_fri.exec(function(err,datafri){
+                                                        filter_doctor_time13.exec(function(err,data13){
                                                             if (err) throw error;
-                                                            filter_sat.exec(function(err,datasat){
+                                                            filter_doctor_time14.exec(function(err,data14){
                                                                 if (err) throw error;
-                                                                filter_sun.exec(function(err,datasun){
+                                                                filter_doctor_info.exec(function(err,datadr){
                                                                     if (err) throw error;
-                                                                    if (profileemail == "" || profileemail == null || profileemail == undefined){
-                                                                        res.render("booking",{datadr:datadr[0],
-                                                                            read1:data1,read2:data2,read3:data3,read4:data4,read5:data5,read6:data6,read7:data7,
-                                                                            mon:datamon,tue:datatue,wed:datawed,thu:datathu,fri:datafri,sat:datasat,sun:datasun,
-                                                                            data:"",logpro:"none",logdis:"",occupation:""})
-                                                                    }
-                                                                    else{
-                                                                        res.render("booking",{datadr:datadr[0],
-                                                                            read1:data1,read2:data2,read3:data3,read4:data4,read5:data5,read6:data6,read7:data7,
-                                                                            mon:datamon,tue:datatue,wed:datawed,thu:datathu,fri:datafri,sat:datasat,sun:datasun,
-                                                                            data:logdata[0],logpro:"",logdis:"none",occupation:occup})
-                                                                    }
+                                                                    filter_mon.exec(function(err,datamon){
+                                                                        if (err) throw error;
+                                                                        filter_tue.exec(function(err,datatue){
+                                                                            if (err) throw error;
+                                                                            filter_wed.exec(function(err,datawed){
+                                                                                if (err) throw error;
+                                                                                filter_thu.exec(function(err,datathu){
+                                                                                    if (err) throw error;
+                                                                                    filter_fri.exec(function(err,datafri){
+                                                                                        if (err) throw error;
+                                                                                        filter_sat.exec(function(err,datasat){
+                                                                                            if (err) throw error;
+                                                                                            filter_sun.exec(function(err,datasun){
+                                                                                                if (err) throw error;
+                                                                                                if (profileemail == "" || profileemail == null || profileemail == undefined){
+                                                                                                    res.render("booking",{datadr:datadr[0],
+                                                                                                        read1:data1,read2:data2,read3:data3,read4:data4,read5:data5,read6:data6,read7:data7,
+                                                                                                        read8:data8,read9:data9,read10:data10,read11:data11,read12:data12,read13:data13,read14:data14,
+                                                                                                        mon:datamon,tue:datatue,wed:datawed,thu:datathu,fri:datafri,sat:datasat,sun:datasun,
+                                                                                                        data:"",logpro:"none",logdis:"",occupation:""})
+                                                                                                }
+                                                                                                else{
+                                                                                                    res.render("booking",{datadr:datadr[0],
+                                                                                                        read1:data1,read2:data2,read3:data3,read4:data4,read5:data5,read6:data6,read7:data7,
+                                                                                                        read8:data8,read9:data9,read10:data10,read11:data11,read12:data12,read13:data13,read14:data14,
+                                                                                                        mon:datamon,tue:datatue,wed:datawed,thu:datathu,fri:datafri,sat:datasat,sun:datasun,
+                                                                                                        data:logdata[0],logpro:"",logdis:"none",occupation:occup})
+                                                                                                }
+                                                                                            })
+                                                                                        })
+                                                                                    })
+                                                                                })
+                                                                            })
+                                                                        })
+                                                                    })
                                                                 })
                                                             })
                                                         })
                                                     })
                                                 })
+
                                             })
                                         })
                                     })
@@ -656,19 +1101,45 @@ router.get("/booking/:drname",(req,res)=>{
     })
 
 router.get("/checkout/:drname",(req,res)=>{
-    
     if (profileemail == "" || profileemail == null || profileemail == undefined){
-        res.render("checkout",{dr:req.params.drname,data:"",logpro:"none",logdis:"",mssg:"Please Before Login then Booking",occupation:""})
+        res.render("checkout",{dr:req.params.drname,checkday:chkday,data:"",logpro:"none",logdis:"",mssg:"Please Before Login then Booking",occupation:""})
     }
     else if(occupation=="doctor"){
-        res.render("checkout",{dr:req.params.drname,data:"",logpro:"none",logdis:"",mssg:"Please Login as a Patient",occupation:"Doctor"})
+        res.render("checkout",{dr:req.params.drname,checkday:chkday,data:"",logpro:"none",logdis:"",mssg:"Please Login as a Patient",occupation:"Doctor"})
     }
     else{
-        res.render("checkout",{dr:req.params.drname,data:logdata[0],logpro:"",logdis:"none",mssg:"",occupation:"Patient"}) 
+        res.render("checkout",{dr:req.params.drname,checkday:chkday,data:logdata[0],logpro:"",logdis:"none",mssg:"",occupation:"Patient"}) 
     }
 })
+
+var checkday=function(req,res,next){
+    var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    var date=req.body.year+"-"+req.body.month +"-"+ req.body.day;
+    var d = new Date(date);
+    var q=d.getDay();
+    if(days[q]=="Sunday"){
+        chkday="given date is Sunday please fill another date"
+        res.redirect("/checkout/"+req.body.doctor)
+    }
+    else{
+        var dt=req.body.day+"/"+req.body.month +"/"+ req.body.year;
+        var tm=req.body.hour+":"+req.body.min +" "+ req.body.for;
+        DoctorSheduleModel=DrShedule.model(req.body.doctor,doctor_shedule_schema);
+        var filter_doctor_time=DoctorSheduleModel.find({$and:[{date:dt},{time:tm}]})
+        filter_doctor_time.exec(function(err,data){
+            if(err) throw error;
+            if(data[0] !== undefined){
+                chkday="Given time is already booked please select another time"
+                res.redirect("/checkout/"+req.body.doctor)
+            }
+            else{
+                next();
+            }
+        })
+    }
+}
 var t;
-router.post("/payment",function(req,res){
+router.post("/payment",checkday,function(req,res){
     t=0;
     var date=req.body.day+"/"+req.body.month +"/"+ req.body.year;
     var time=req.body.hour+":"+req.body.min +" "+ req.body.for;
@@ -800,7 +1271,8 @@ router.post("/doctor-profile-setting",upload,(req,res)=>{
         fs.unlinkSync(path.join(__dirname, '../public/user_images/'+req.body.img));
     }
     
-    
+    console.log(req.body.email)
+
     var filter_details_update=DoctorBasicInfoModel.findOneAndUpdate({email:req.body.email},{
     name:req.body.name,
     email:req.body.email.trim(),
@@ -827,6 +1299,7 @@ router.post("/doctor-profile-setting",upload,(req,res)=>{
     jc_ac_name:req.body.jc_ac_name
 }) 
 filter_details_update.exec(function(err){
+    console.log("chal")
     res.redirect("/doctor-profile-setting/"+req.body.name)
 });
 })

@@ -125,7 +125,8 @@
 			<!-- Page Content -->
 			<div class="content">
 				<div class="container">
-					<h4><a href="/doctor-profile">You are Booking Dr.<%= dr%></a></h4>
+					<h4><a href="/doctor-profile">You are Booking <%= dr%></a></h4>
+					<h4 style="color: red; text-align: center; margin-top: 10px; margin-bottom: 10px;" class="card-title"><%= checkday%></h4>
 					<div style="justify-content: center;" class="row">
 						<div class="col-md-7 col-lg-8">
 							<div class="card">
@@ -138,16 +139,10 @@
 											<input type="hidden" name="doctor" value="<%= dr%>">
 											<h4 class="card-title">Personal Information</h4>
 											<div style="display: <%= logpro%>;" class="row">
-												<div class="col-md-6 col-sm-12">
+												<div class="col-md-12 col-sm-12">
 													<div class="form-group card-label">
 														<label>Name</label>
 														<input class="form-control" type="text" name="name" value="<%= data.name%>" readonly>
-													</div>
-												</div>
-												<div class="col-md-6 col-sm-12">
-													<div class="form-group card-label">
-														<label>Gender</label>
-														<input class="form-control" type="text" name="gender" value="<%= data.gender%>" readonly>
 													</div>
 												</div>
 												<div class="col-md-6 col-sm-12">
@@ -167,6 +162,16 @@
 													<div class="form-group card-label">
 														<label>Blood Group</label>
 														<input class="form-control" type="text" name="blood_group" value="<%= data.blood_group%>" readonly>
+													</div>
+												</div>
+												<div class="col-md-6">
+													<div class="form-group">
+														<label>Gender<span class="text-danger">*</span></label>
+														<input type="hidden" name="g_value" id="gender_value" value="<%= data.gender%>">
+														<select id="gender" class="form-control" name="gender" value="<%= data.gender%>" required readonly>
+															<option value="Male">Male</option>
+															<option value="Female">Female</option>
+														</select>
 													</div>
 												</div>
 												<div class="col-md-6 col-sm-12">
@@ -349,12 +354,12 @@
 				<div class="footer-top">
 					<div class="container-fluid">
 						<div class="row">
-							<div class="col-lg-6 col-md-6">
+							<div class="col-lg-3 col-md-6">
 							
 								<!-- Footer Widget -->
 								<div class="footer-widget footer-about">
 									<div class="footer-logo">
-										<img src="/assets/img/footer-logo.png" alt="logo">
+										<img style="width: 80%;" src="/assets/img/footer-logo.png" alt="logo">
 									</div>
 									<div class="footer-about-content">
 										<div class="social-icon">
@@ -379,27 +384,85 @@
 									</div>
 								</div>
 								<!-- /Footer Widget -->
-								
+								<div class="footer-widget footer-menu">
+									<h2 style="margin-top: 20px;" class="footer-title">Lab Test</h2>
+									<ul style="color: white;">
+										<li>Labs in Lahore</li>
+										<li>Labs in Karachi</li>
+										<li>Labs in Islamabad</li>
+										<li>Labs in Peshawar</li>
+										<li>Labs in Quetta</li>
+									</ul>
+								</div>
 							</div>
-							<div class="col-lg-6 col-md-6">
+							
+							<div class="col-lg-3 col-md-6">
 							
 								<!-- Footer Widget -->
-								<div class="footer-widget footer-contact">
-									<h2 class="footer-title">Contact Us</h2>
-									<div class="footer-contact-info">
-										<div class="footer-address">
-											<span><i class="fas fa-map-marker-alt"></i></span>
-											<p> 3556  Beech Street, San Francisco,<br> California, CA 94108 </p>
-										</div>
-										<p>
-											<i class="fas fa-phone-alt"></i>
-											+1 315 369 5943
-										</p>
-										<p class="mb-0">
-											<i class="fas fa-envelope"></i>
-											doccure@example.com
-										</p>
-									</div>
+								<div class="footer-widget footer-menu">
+									<ul style="color: white;">
+										<li>Gynecologist in Lahore</li>
+										<li>Gastroenterologist in Lahore</li>
+										<li>Orthopedic in Lahore</li>
+										<li>Neuro Physician in Lahore</li>
+										<li>General Physician in Lahore</li>
+										<li>Cardiologist in Lahore</li>
+										<li>Psyschiatrist in Lahore</li>
+										<li>Dentist in Lahore</li>
+										<li>Eye Specialist in Lahore</li>
+										<li>Child Specialist in Lahore</li>
+										<li>ENT Specialist in Lahore</li>
+										<li>Dermatologist in Lahore</li>
+										<li>Urologist in Lahore</li>
+									</ul>
+								</div>
+								<!-- /Footer Widget -->
+								
+							</div>
+							
+							<div class="col-lg-3 col-md-6">
+							
+								<!-- Footer Widget -->
+								<div class="footer-widget footer-menu">
+									<ul style="color: white;">
+										<li>Gynecologist in Karachi</li>
+										<li>Gastroenterologist in Karachi</li>
+										<li>Orthopedic in Karachi</li>
+										<li>Neuro Physician in Karachi</li>
+										<li>General Physician in Karachi</li>
+										<li>Cardiologist in Karachi</li>
+										<li>Psyschiatrist in Karachi</li>
+										<li>Dentist in Karachi</li>
+										<li>Eye Specialist in Karachi</li>
+										<li>Child Specialist in Karachi</li>
+										<li>ENT Specialist in Karachi</li>
+										<li>Dermatologist in Karachi</li>
+										<li>Urologist in Karachi</li>
+									</ul>
+								</div>
+								<!-- /Footer Widget -->
+								
+							</div>
+							
+							<div class="col-lg-3 col-md-6">
+							
+								<!-- Footer Widget -->
+								<div class="footer-widget footer-menu">
+									<ul style="color: white;">
+										<li>Gynecologist in Islamabad</li>
+										<li>Gastroenterologist in Islamabad</li>
+										<li>Orthopedic in Islamabad</li>
+										<li>Neuro Physician in Islamabad</li>
+										<li>General Physician in Islamabad</li>
+										<li>Cardiologist in Islamabad</li>
+										<li>Psyschiatrist in Islamabad</li>
+										<li>Dentist in Islamabad</li>
+										<li>Eye Specialist in Islamabad</li>
+										<li>Child Specialist in Islamabad</li>
+										<li>ENT Specialist in Islamabad</li>
+										<li>Dermatologist in Islamabad</li>
+										<li>Urologist in Islamabad</li>
+									</ul>
 								</div>
 								<!-- /Footer Widget -->
 								
@@ -411,12 +474,12 @@
 				<!-- /Footer Top -->
 				
 				<!-- Footer Bottom -->
-				<div class="footer-bottom">
+                <div class="footer-bottom">
 					<div class="container-fluid">
 					
 						<!-- Copyright -->
 						<div class="copyright">
-								<h5 style="text-align: center; color: white;" class="lin">© 2021|All Rights Reserved By MediTalk</h5>
+							<p style="text-align: center; color: white;">© 2021|All Rights Reserved By MediTalk</p>
 						</div>
 						<!-- /Copyright -->
 						
@@ -443,7 +506,16 @@
 		
 		<!-- Custom JS -->
 		<script src="/assets/js/script.js"></script>
-		
+		<script>
+			// For Gender Value
+			var gender_value=document.getElementById("gender_value").value;
+			selectElement('gender', gender_value)
+
+			function selectElement(id, valueToSelect) {    
+				let element = document.getElementById(id);
+				element.value = valueToSelect;
+			}
+		</script>
 	</body>
 
 <!-- doccure/checkout.html  30 Nov 2019 04:12:16 GMT -->

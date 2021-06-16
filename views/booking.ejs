@@ -201,11 +201,9 @@
 																		</h4>
 																		<!-- Slot List -->
 																		<div class="doc-times">
-																			<%sun.forEach(function(su){ %>
 																			<div class="doc-slot-list">
-																				<%= su.t%>
+																				Closed
 																			</div>
-																			<% })%>
 																		</div>
 																		<!-- /Slot List -->
 																	</div>
@@ -365,8 +363,36 @@
 														<span class="slot-date">16 Nov</span>
 													</li>
 													<li>
-														<span>Sun</span>
-														<span class="slot-date">17 Nov</span>
+														<span>Sat</span>
+														<span class="slot-date">16 Nov</span>
+													</li>
+													<li>
+														<span>Mon</span>
+														<span class="slot-date">11 Nov</span>
+													</li>
+													<li>
+														<span>Tue</span>
+														<span class="slot-date">12 Nov</span>
+													</li>
+													<li>
+														<span>Wed</span>
+														<span class="slot-date">13 Nov</span>
+													</li>
+													<li>
+														<span>Thu</span>
+														<span class="slot-date">14 Nov</span>
+													</li>
+													<li>
+														<span>Fri</span>
+														<span class="slot-date">15 Nov</span>
+													</li>
+													<li>
+														<span></span>
+														<span class="slot-date">16 Nov</span>
+													</li>
+													<li>
+														<span></span>
+														<span class="slot-date">16 Nov</span>
 													</li>
 												</ul>
 											</div>
@@ -434,6 +460,55 @@
 														</a>
 														<% }) %>
 													</li>
+													<li>
+														<%read8.forEach(function(row){ %>
+														<a class="timing selected">
+															<span><%= row.time%></span>
+														</a>
+														<% }) %>
+													</li>
+													<li>
+														<%read9.forEach(function(row){ %>
+														<a class="timing selected">
+															<span><%= row.time%></span>
+														</a>
+														<% }) %>
+													</li>
+													<li>
+														<%read10.forEach(function(row){ %>
+														<a class="timing selected">
+															<span><%= row.time%></span>
+														</a>
+														<% }) %>
+													</li>
+													<li>
+														<%read11.forEach(function(row){ %>
+														<a class="timing selected">
+															<span><%= row.time%></span>
+														</a>
+														<% }) %>
+													</li>
+													<li>
+														<%read12.forEach(function(row){ %>
+														<a class="timing selected">
+															<span><%= row.time%></span>
+														</a>
+														<% }) %>
+													</li>
+													<li>
+														<%read13.forEach(function(row){ %>
+														<a class="timing selected">
+															<span><%= row.time%></span>
+														</a>
+														<% }) %>
+													</li>
+													<li>
+														<%read14.forEach(function(row){ %>
+														<a class="timing selected">
+															<span><%= row.time%></span>
+														</a>
+														<% }) %>
+													</li>
 												</ul>
 											</div>
 											<!-- /Time Slot -->
@@ -471,12 +546,12 @@
 				<div class="footer-top">
 					<div class="container-fluid">
 						<div class="row">
-							<div class="col-lg-6 col-md-6">
+							<div class="col-lg-3 col-md-6">
 							
 								<!-- Footer Widget -->
 								<div class="footer-widget footer-about">
 									<div class="footer-logo">
-										<img src="/assets/img/footer-logo.png" alt="logo">
+										<img style="width: 80%;" src="/assets/img/footer-logo.png" alt="logo">
 									</div>
 									<div class="footer-about-content">
 										<div class="social-icon">
@@ -501,27 +576,85 @@
 									</div>
 								</div>
 								<!-- /Footer Widget -->
-								
+								<div class="footer-widget footer-menu">
+									<h2 style="margin-top: 20px;" class="footer-title">Lab Test</h2>
+									<ul style="color: white;">
+										<li>Labs in Lahore</li>
+										<li>Labs in Karachi</li>
+										<li>Labs in Islamabad</li>
+										<li>Labs in Peshawar</li>
+										<li>Labs in Quetta</li>
+									</ul>
+								</div>
 							</div>
-							<div class="col-lg-6 col-md-6">
+							
+							<div class="col-lg-3 col-md-6">
 							
 								<!-- Footer Widget -->
-								<div class="footer-widget footer-contact">
-									<h2 class="footer-title">Contact Us</h2>
-									<div class="footer-contact-info">
-										<div class="footer-address">
-											<span><i class="fas fa-map-marker-alt"></i></span>
-											<p> 3556  Beech Street, San Francisco,<br> California, CA 94108 </p>
-										</div>
-										<p>
-											<i class="fas fa-phone-alt"></i>
-											+1 315 369 5943
-										</p>
-										<p class="mb-0">
-											<i class="fas fa-envelope"></i>
-											doccure@example.com
-										</p>
-									</div>
+								<div class="footer-widget footer-menu">
+									<ul style="color: white;">
+										<li>Gynecologist in Lahore</li>
+										<li>Gastroenterologist in Lahore</li>
+										<li>Orthopedic in Lahore</li>
+										<li>Neuro Physician in Lahore</li>
+										<li>General Physician in Lahore</li>
+										<li>Cardiologist in Lahore</li>
+										<li>Psyschiatrist in Lahore</li>
+										<li>Dentist in Lahore</li>
+										<li>Eye Specialist in Lahore</li>
+										<li>Child Specialist in Lahore</li>
+										<li>ENT Specialist in Lahore</li>
+										<li>Dermatologist in Lahore</li>
+										<li>Urologist in Lahore</li>
+									</ul>
+								</div>
+								<!-- /Footer Widget -->
+								
+							</div>
+							
+							<div class="col-lg-3 col-md-6">
+							
+								<!-- Footer Widget -->
+								<div class="footer-widget footer-menu">
+									<ul style="color: white;">
+										<li>Gynecologist in Karachi</li>
+										<li>Gastroenterologist in Karachi</li>
+										<li>Orthopedic in Karachi</li>
+										<li>Neuro Physician in Karachi</li>
+										<li>General Physician in Karachi</li>
+										<li>Cardiologist in Karachi</li>
+										<li>Psyschiatrist in Karachi</li>
+										<li>Dentist in Karachi</li>
+										<li>Eye Specialist in Karachi</li>
+										<li>Child Specialist in Karachi</li>
+										<li>ENT Specialist in Karachi</li>
+										<li>Dermatologist in Karachi</li>
+										<li>Urologist in Karachi</li>
+									</ul>
+								</div>
+								<!-- /Footer Widget -->
+								
+							</div>
+							
+							<div class="col-lg-3 col-md-6">
+							
+								<!-- Footer Widget -->
+								<div class="footer-widget footer-menu">
+									<ul style="color: white;">
+										<li>Gynecologist in Islamabad</li>
+										<li>Gastroenterologist in Islamabad</li>
+										<li>Orthopedic in Islamabad</li>
+										<li>Neuro Physician in Islamabad</li>
+										<li>General Physician in Islamabad</li>
+										<li>Cardiologist in Islamabad</li>
+										<li>Psyschiatrist in Islamabad</li>
+										<li>Dentist in Islamabad</li>
+										<li>Eye Specialist in Islamabad</li>
+										<li>Child Specialist in Islamabad</li>
+										<li>ENT Specialist in Islamabad</li>
+										<li>Dermatologist in Islamabad</li>
+										<li>Urologist in Islamabad</li>
+									</ul>
 								</div>
 								<!-- /Footer Widget -->
 								
@@ -533,12 +666,12 @@
 				<!-- /Footer Top -->
 				
 				<!-- Footer Bottom -->
-				<div class="footer-bottom">
+                <div class="footer-bottom">
 					<div class="container-fluid">
 					
 						<!-- Copyright -->
 						<div class="copyright">
-								<h5 style="text-align: center; color: white;" class="lin">© 2021|All Rights Reserved By MediTalk</h5>
+							<p style="text-align: center; color: white;">© 2021|All Rights Reserved By MediTalk</p>
 						</div>
 						<!-- /Copyright -->
 						
@@ -565,6 +698,7 @@
 	</body>
 	<script>
 var day_parent=document.getElementsByClassName('day-slot')[0].getElementsByTagName("ul")[0];
+var time_parent=document.getElementsByClassName('time-slot')[0].getElementsByTagName("ul")[0];
 
 var day_name=day_parent.getElementsByTagName("li")[1].getElementsByTagName("span")[0].innerText;
 
@@ -577,26 +711,106 @@ for(var i=0;i<7;i++){
 	if(q>6)
 	{
 		day_parent.getElementsByTagName("li")[i].getElementsByTagName("span")[0].innerText=days[q-7].slice(0, 3);
+		day_parent.getElementsByTagName("li")[i+7].getElementsByTagName("span")[0].innerText=days[q-7].slice(0, 3);
 	}
 	else
 	{
 		day_parent.getElementsByTagName("li")[i].getElementsByTagName("span")[0].innerText=days[q].slice(0, 3);
+		day_parent.getElementsByTagName("li")[i+7].getElementsByTagName("span")[0].innerText=days[q].slice(0, 3);
+	}	
+}
+
+for(var i=0;i<=7;i++){
+	var q=d.getDay()+i;
+	if(q>6)
+	{
+		if (days[q-7] == "Sunday"){
+			time_parent.getElementsByTagName("li")[i].innerHTML="<a style='background:red; border:unset' class='timing selected'><span>Closed</span></a>";
+			time_parent.getElementsByTagName("li")[i+7].innerHTML="<a style='background:red; border:unset' class='timing selected'><span>Closed</span></a>";
+		}
+		
+	}
+	else
+	{
+		if (days[q] == "Sunday"){
+			time_parent.getElementsByTagName("li")[i].innerHTML="<a style='background:red; border:unset' class='timing selected'><span>Closed</span></a>";
+			time_parent.getElementsByTagName("li")[i+7].innerHTML="<a style='background:red; border:unset' class='timing selected'><span>Closed</span></a>";
+		}
+		
 	}	
 }
 
 // Set change day name to today
 day_parent.getElementsByTagName("li")[0].getElementsByTagName("span")[0].innerText="Today";
+var x=1;
 
-for(var i=0;i<7;i++){
+for(var i=0;i<14;i++){
 	var today = new Date();
 	var dd = String(today.getDate()+i).padStart(2, '0');
 	var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
 	var yyyy = today.getFullYear();
-	
 	today = mm + '/' + dd + '/' + yyyy;
-	const date = new Date();
+	const date = new Date("2021-"+mm+"-28");
 	const month= date.toLocaleString('default', { month: 'long' });
-	document.getElementsByClassName('slot-date')[i].innerText= dd +" " +	month +" "+ yyyy;
+	
+	if(mm == 2){
+		if(dd > 28){
+			mm++
+			const date = new Date("2021-"+mm+"-28");
+			const month= date.toLocaleString('default', { month: 'long' });
+			document.getElementsByClassName('slot-date')[i].innerText= dd-28 +" " +	month +" "+ yyyy;
+		}
+		else{
+			document.getElementsByClassName('slot-date')[i].innerText= dd +" " +	month +" "+ yyyy;
+		}
+	}
+	else if(mm == 12){
+		if(dd > 31){
+			const date = new Date("2021-1-28");
+			const month= date.toLocaleString('default', { month: 'long' });
+			yyyy++;
+			document.getElementsByClassName('slot-date')[i].innerText= dd-31 +" " +	month +" "+ yyyy;
+		}
+		else{
+			document.getElementsByClassName('slot-date')[i].innerText= dd +" " +	month +" "+ yyyy;
+		}
+	}
+	else if(mm % 2==1 && mm<8){
+		if(dd > 31){
+			mm++
+			const date = new Date("2021-"+mm+"-28");
+			const month= date.toLocaleString('default', { month: 'long' });
+			document.getElementsByClassName('slot-date')[i].innerText= dd-31 +" " +	month +" "+ yyyy;
+		}
+		else{
+			document.getElementsByClassName('slot-date')[i].innerText= dd +" " +	month +" "+ yyyy;
+		}
+	}
+	else if(mm % 2==0 && mm>7){
+		if(dd > 31){
+			mm++
+			const date = new Date("2021-"+mm+"-28");
+			const month= date.toLocaleString('default', { month: 'long' });
+			month++;
+			document.getElementsByClassName('slot-date')[i].innerText= dd-31 +" " +	month +" "+ yyyy;
+		}
+		else{
+			document.getElementsByClassName('slot-date')[i].innerText= dd +" " +	month +" "+ yyyy;
+		}
+	}
+	else{
+		if(dd > 30){
+			mm++
+			const date = new Date("2021-"+mm+"-28");
+			const month= date.toLocaleString('default', { month: 'long' });
+			document.getElementsByClassName('slot-date')[i].innerText= dd-30 +" " +	month +" "+ yyyy;
+		}
+		else{
+			document.getElementsByClassName('slot-date')[i].innerText= dd +" " +	month +" "+ yyyy;
+		}
+	}
+	
+	
 }
 	</script>
 

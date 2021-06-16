@@ -3417,6 +3417,8 @@ html.menu-opened body {
 	18. Booking
 -----------------------*/
 
+.booking-schedule.schedule-widget {
+    overflow-x: auto;}
 .booking-doc-info {
 	display: -webkit-box;
 	display: -ms-flexbox;
@@ -3447,6 +3449,9 @@ html.menu-opened body {
     padding: 10px 20px;
 }
 .day-slot ul {
+	display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
     float: left;
     list-style: none;
     margin-bottom: 0;
@@ -3457,6 +3462,8 @@ html.menu-opened body {
     width: 100%;
 }
 .day-slot li {
+	flex: 0 0 110px;
+    width: 110px;
     float: left;
     padding-left: 5px;
     padding-right: 5px;
@@ -3499,6 +3506,9 @@ html.menu-opened body {
     padding: 20px;
 }
 .time-slot ul {
+	display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
     list-style: none;
     margin-right: -5px;
     margin-left: -5px;
@@ -3506,6 +3516,8 @@ html.menu-opened body {
     padding: 0;
 }
 .time-slot li {
+	flex: 0 0 110px;
+    width: 110px;
     float: left;
     padding-left: 5px;
     padding-right: 5px;
@@ -3534,16 +3546,7 @@ html.menu-opened body {
 	border: 1px solid #42c0fb;
 	color: #fff;
 }
-.time-slot li .timing.selected::before {
-    color: #fff;
-    content: "\f00c";
-    font-family: "Font Awesome 5 Free";
-	font-size: 12px;
-    font-weight: 900;
-    position: absolute;
-    right: 6px;
-    top: 6px;
-}
+
 .schedule-list {
     border-bottom: 1px solid #cfcfcf;
     margin-bottom: 50px;
