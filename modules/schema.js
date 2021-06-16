@@ -1,5 +1,6 @@
 const mongoose=require("mongoose")
-mongoose.connect('mongodb://localhost:27017/default', {useNewUrlParser: true, useUnifiedTopology: true,'useFindAndModify': false});
+// mongoose.connect('mongodb://localhost:27017/default', {useNewUrlParser: true, useUnifiedTopology: true,'useFindAndModify': false});
+mongoose.connect('mongodb+srv://asdfghjkl:asdfghjkl@nouman.ca2u5.mongodb.net/default?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true});
 
 const signschema = new mongoose.Schema({
     name: String,
